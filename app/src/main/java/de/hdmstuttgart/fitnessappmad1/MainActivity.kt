@@ -3,6 +3,7 @@ package de.hdmstuttgart.fitnessappmad1
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import de.hdmstuttgart.fitnessappmad1.fragments.HomeFragment
+import de.hdmstuttgart.fitnessappmad1.fragments.CountdownFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,7 +13,8 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction().apply {
             val homeFragment = HomeFragment()
-            replace(R.id.flFragment, homeFragment)
+            val timerFragment = CountdownFragment()
+            replace(R.id.flFragment, timerFragment)
             commit()
         }
     }

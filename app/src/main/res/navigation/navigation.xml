@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/timerFragment"
-        android:name="de.hdmstuttgart.fitnessappmad1.fragments.TimerFragment"
+        android:name="de.hdmstuttgart.fitnessappmad1.fragments.CountdownFragment"
         android:label="fragment_timer"
-        tools:layout="@layout/fragment_timer" />
+        tools:layout="@layout/fragment_countdown" />
 </navigation>
