@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface ExerciseDao {
 
     @Query("SELECT * FROM exercise_table ORDER BY titel ASC")
-    fun readAllExercises(): LiveData<List<Exercise>>
+    fun readAllExercises(): Flow<List<Exercise>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(word: Exercise)
