@@ -31,12 +31,12 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private fun startCountdown() {
         object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                tvCountdown.setText((millisUntilFinished / 1000).toString())
+                tvCountdown.text = (millisUntilFinished / 1000).toString()
                 pbCountdown.progress = (millisUntilFinished / 1000).toInt()
             }
 
             override fun onFinish() {
-                tvCountdown.setText("done!")
+                tvCountdown.text = "done!"
             }
         }.start()
 
