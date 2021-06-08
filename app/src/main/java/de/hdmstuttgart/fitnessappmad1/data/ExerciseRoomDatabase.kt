@@ -58,7 +58,7 @@ abstract class ExerciseRoomDatabase : RoomDatabase() {
             wordDao.deleteAll()
 
             val exerciseList = mutableListOf(
-                Exercise("Liegestuetzen", "..."),
+                Exercise(0, "Liegestuetzen", "..."),
             )
 
             for (exercise in exerciseList) {
