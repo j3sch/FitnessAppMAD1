@@ -7,46 +7,45 @@ import androidx.fragment.app.Fragment
 import de.hdmstuttgart.fitnessappmad1.R
 import kotlinx.android.synthetic.main.fragment_countdown.*
 
-
 class CountdownFragment : Fragment(R.layout.fragment_countdown) {
 
-    private var isCountdownRunning: Boolean = true;
+    private var isPaused = false
+    private var resumeFromMillis: Long = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startCountdown()
+        startCountdown(60000, 1000)
 
         btnStartStop.setOnClickListener {
-            if (isCountdownRunning) {
-                stopCountdown()
-                isCountdownRunning = false
+            if (!isPaused) {
+                isPaused = true
             } else {
-                resumeCountdown()
-                isCountdownRunning = true
+                isPaused = false
+                startCountdown(resumeFromMillis, 1000)
+
             }
         }
     }
 
-    private fun startCountdown() {
-        object : CountDownTimer(60000, 1000) {
+    private fun startCountdown(millisInFuture: Long,countDownInterval: Long) {
+        object : CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                tvCountdown.text = (millisUntilFinished / 1000).toString()
-                pbCountdown.progress = (millisUntilFinished / 1000).toInt()
+                val timeRemaining = millisUntilFinished / 1000
+                if (isPaused) {
+                    tvCountdown.text = timeRemaining.toString()
+                    pbCountdown.progress = timeRemaining.toInt()
+                    resumeFromMillis = millisUntilFinished
+                    cancel()
+                } else {
+                    tvCountdown.text = timeRemaining.toString()
+                    pbCountdown.progress = timeRemaining.toInt()
+                }
             }
 
             override fun onFinish() {
                 tvCountdown.text = "done!"
             }
         }.start()
-
-    }
-
-    private fun stopCountdown() {
-
-    }
-
-    private fun resumeCountdown() {
-
     }
 }
