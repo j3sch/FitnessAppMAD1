@@ -40,18 +40,21 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         }
 
         tvLast.setOnClickListener {
+            tvExercise.text = "Klimmzuege"
             scope.launch {
                 lastButton()
             }
         }
 
         tvCurrent.setOnClickListener {
+            tvExercise.text = "Exercise"
             scope.launch {
                 currentButton()
             }
         }
 
         tvNext.setOnClickListener {
+            tvExercise.text = "Liegestuetzen"
             scope.launch {
                 nextButton()
             }
@@ -82,8 +85,13 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
                     resumeFromMillis = millisUntilFinished
                     cancel()
                 } else {
-                    tvCountdown.text = timeRemaining.toString()
-                    pbCountdown.progress = timeRemaining.toInt()
+                    try {
+                        tvCountdown.text = timeRemaining.toString()
+                        pbCountdown.progress = timeRemaining.toInt()
+                    } catch (e: Exception) {
+                        cancel()
+                        e.printStackTrace()
+                    }
                 }
             }
             override fun onFinish() {
@@ -97,7 +105,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(1000)
         withContext (Dispatchers.Main) {
-            tvExercise.text = "Liegestuetzen"
             isPaused = false
             startCountdown(60000, 1000)
         }
@@ -107,7 +114,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(1000)
         withContext (Dispatchers.Main) {
-            tvExercise.text = "Exercise"
             isPaused = false
             startCountdown(60000, 1000)
         }
@@ -117,7 +123,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(1000)
         withContext (Dispatchers.Main) {
-            tvExercise.text = "Klimmzuege"
             isPaused = false
             startCountdown(60000, 1000)
         }
