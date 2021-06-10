@@ -16,6 +16,7 @@ import kotlinx.coroutines.*
 
 class CountdownFragment : Fragment(R.layout.fragment_countdown) {
 
+    private val scope = CoroutineScope(Dispatchers.Main)
     private var isPaused = false
     private var resumeFromMillis: Long = 0
 
@@ -39,38 +40,20 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         }
 
         tvLast.setOnClickListener {
-            GlobalScope.launch(Dispatchers.IO) {
-                isPaused = true
-                delay(1000)
-                withContext (Dispatchers.Main) {
-                    tvExercise.text = "Klimmzuege"
-                    isPaused = false
-                    startCountdown(60000, 1000)
-                }
+            scope.launch {
+                lastButton()
             }
         }
 
         tvCurrent.setOnClickListener {
-            GlobalScope.launch(Dispatchers.IO) {
-                isPaused = true
-                delay(1000)
-                withContext (Dispatchers.Main) {
-                    tvExercise.text = "Exercise"
-                    isPaused = false
-                    startCountdown(60000, 1000)
-                }
+            scope.launch {
+                currentButton()
             }
+        }
 
-            tvNext.setOnClickListener {
-                GlobalScope.launch(Dispatchers.IO) {
-                    isPaused = true
-                    delay(1000)
-                    withContext (Dispatchers.Main) {
-                        tvExercise.text = "Liegestuetzen"
-                        isPaused = false
-                        startCountdown(60000, 1000)
-                    }
-                }
+        tvNext.setOnClickListener {
+            scope.launch {
+                nextButton()
             }
         }
 
@@ -108,5 +91,35 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
                 tvCountdown.text = "done!"
             }
         }.start()
+    }
+
+    suspend fun nextButton() {
+        isPaused = true
+        delay(1000)
+        withContext (Dispatchers.Main) {
+            tvExercise.text = "Liegestuetzen"
+            isPaused = false
+            startCountdown(60000, 1000)
+        }
+    }
+
+    suspend fun currentButton() {
+        isPaused = true
+        delay(1000)
+        withContext (Dispatchers.Main) {
+            tvExercise.text = "Exercise"
+            isPaused = false
+            startCountdown(60000, 1000)
+        }
+    }
+
+    suspend fun lastButton() {
+        isPaused = true
+        delay(1000)
+        withContext (Dispatchers.Main) {
+            tvExercise.text = "Klimmzuege"
+            isPaused = false
+            startCountdown(60000, 1000)
+        }
     }
 }
