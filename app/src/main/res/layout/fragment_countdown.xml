@@ -10,11 +10,12 @@
         android:id="@+id/tvLast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="14dp"
         android:text="last"
         android:textSize="20sp"
-        android:padding="14dp"
         app:layout_constraintBottom_toTopOf="@+id/tvExercise"
         app:layout_constraintEnd_toStartOf="@+id/tvCurrent"
+        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="current"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:padding="14dp"
         app:layout_constraintBottom_toTopOf="@+id/tvExercise"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,11 +35,12 @@
         android:id="@+id/tvNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="14dp"
         android:text="next"
         android:textSize="20sp"
-        android:padding="14dp"
         app:layout_constraintBottom_toTopOf="@+id/tvExercise"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
         app:layout_constraintStart_toEndOf="@+id/tvCurrent"
         app:layout_constraintTop_toTopOf="parent" />
 
