@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().apply {
             val homeFragment = HomeFragment()
             val timerFragment = CountdownFragment()
-            replace(R.id.flFragment, homeFragment)
+            replace(R.id.flFragment, timerFragment)
             commit()
         }
     }
