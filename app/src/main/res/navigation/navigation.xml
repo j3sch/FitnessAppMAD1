@@ -11,12 +11,20 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_timerFragment"
-            app:destination="@id/timerFragment" />
+            android:id="@+id/action_homeFragment_to_overviewFragment"
+            app:destination="@id/overviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/timerFragment"
+        android:id="@+id/overviewFragment"
+        android:name="de.hdmstuttgart.fitnessappmad1.fragments.OverviewFragment"
+        android:label="OverviewFragment" >
+        <action
+            android:id="@+id/action_overviewFragment_to_countdownFragment"
+            app:destination="@id/countdownFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/countdownFragment"
         android:name="de.hdmstuttgart.fitnessappmad1.fragments.CountdownFragment"
-        android:label="fragment_timer"
+        android:label="fragment_countdown"
         tools:layout="@layout/fragment_countdown" />
 </navigation>

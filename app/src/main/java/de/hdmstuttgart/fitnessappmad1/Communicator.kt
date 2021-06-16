@@ -5,4 +5,10 @@ interface Communicator {
     fun switchToCountdown()
 
     fun switchToHome()
+
+    fun switchToOverview()
+
+    fun switchToHistory()
+
+    fun switchToFinish()
 }

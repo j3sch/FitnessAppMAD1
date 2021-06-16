@@ -6,24 +6,20 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.system.Os.close
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
-import de.hdmstuttgart.fitnessappmad1.fragments.HomeFragment
-import de.hdmstuttgart.fitnessappmad1.fragments.CountdownFragment
+import de.hdmstuttgart.fitnessappmad1.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Communicator {
 
-    val CHANNEL_ID = "channelID"
-    val CHANNEL_NAME = "channelName"
+    private val CHANNEL_ID = "channelID"
+    private val CHANNEL_NAME = "channelName"
 
     lateinit var toggle: ActionBarDrawerToggle
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +35,11 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         navView.setNavigationItemSelectedListener {
+            drawerLayout.close()
             when (it.itemId) {
                 R.id.home -> switchToHome()
                 R.id.konfiguration -> Toast.makeText(applicationContext, "Clicked Trainingsplan konfigurieren", Toast.LENGTH_SHORT).show()
-                R.id.history -> Toast.makeText(applicationContext, "Clicked Trainingsplan History", Toast.LENGTH_SHORT).show()
+                R.id.history -> switchToHistory()
                 R.id.settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
             }
             true
@@ -52,8 +49,12 @@ class MainActivity : AppCompatActivity(), Communicator {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
+        } else if (item.itemId == R.id.action_exit) {
+            switchToHome()
+            return true
+        } else {
+            return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun switchToCountdown() {
@@ -72,7 +73,31 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    fun createNotificationChannel() {
+    override fun switchToOverview() {
+        supportFragmentManager.beginTransaction().apply {
+            val overviewFragment = OverviewFragment()
+            replace(R.id.flFragment, overviewFragment)
+            commit()
+        }
+    }
+
+    override fun switchToHistory() {
+        supportFragmentManager.beginTransaction().apply {
+            val historyFragment = HistoryFragment()
+            replace(R.id.flFragment, historyFragment)
+            commit()
+        }
+    }
+
+    override fun switchToFinish() {
+        supportFragmentManager.beginTransaction().apply {
+            val finishFragment = FinishFragment()
+            replace(R.id.flFragment, finishFragment)
+            commit()
+        }
+    }
+
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID, CHANNEL_NAME,
@@ -82,4 +107,14 @@ class MainActivity : AppCompatActivity(), Communicator {
             manager.createNotificationChannel(channel)
         }
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        val inflater: MenuInflater = menuInflater
+//        inflater.inflate(R.menu.menu_exit, menu)
+//        return true
+//    }
+//
+//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+//        return false
+//    }
 }
