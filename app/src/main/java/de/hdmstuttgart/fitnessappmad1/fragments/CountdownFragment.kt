@@ -45,7 +45,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
                 isPaused = true
             } else {
                 isPaused = false
-                startCountdown(resumeFromMillis, 100)
+                startCountdown(resumeFromMillis, 10)
             }
         }
 
@@ -119,28 +119,28 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
 
     private suspend fun nextButton() {
         isPaused = true
-        delay(1000)
+        delay(100)
         withContext (Dispatchers.Main) {
             isPaused = false
-            startCountdown(60000, 100)
+            startCountdown(60000, 10)
         }
     }
 
     private suspend fun currentButton() {
         isPaused = true
-        delay(1000)
+        delay(100)
         withContext (Dispatchers.Main) {
             isPaused = false
-            startCountdown(60000, 100)
+            startCountdown(60000, 10)
         }
     }
 
     private suspend fun lastButton() {
         isPaused = true
-        delay(1000)
+        delay(100)
         withContext (Dispatchers.Main) {
             isPaused = false
-            startCountdown(60000, 100)
+            startCountdown(60000, 10)
         }
     }
 
