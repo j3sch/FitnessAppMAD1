@@ -11,4 +11,6 @@ interface Communicator {
     fun switchToHistory()
 
     fun switchToFinish()
+
+    fun switchToConfigureTraining()
 }

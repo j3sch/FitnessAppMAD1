@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), Communicator {
             drawerLayout.close()
             when (it.itemId) {
                 R.id.home -> switchToHome()
-                R.id.konfiguration -> Toast.makeText(applicationContext, "Clicked Trainingsplan konfigurieren", Toast.LENGTH_SHORT).show()
+                R.id.configure -> switchToConfigureTraining()
                 R.id.history -> switchToHistory()
                 R.id.settings -> Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
             }
@@ -73,6 +73,14 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val homeFragment = HomeFragment()
             replace(R.id.flFragment, homeFragment)
+            commit()
+        }
+    }
+
+    override fun switchToConfigureTraining() {
+        supportFragmentManager.beginTransaction().apply {
+            val configureTraining = ConfigureTrainingFragment()
+            replace(R.id.flFragment, configureTraining)
             commit()
         }
     }
