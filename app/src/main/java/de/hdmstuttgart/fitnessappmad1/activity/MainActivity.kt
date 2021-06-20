@@ -47,13 +47,17 @@ class MainActivity : AppCompatActivity(), Communicator {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        } else if (item.itemId == R.id.action_exit) {
-            switchToHome()
-            return true
-        } else {
-            return super.onOptionsItemSelected(item)
+        return when {
+            toggle.onOptionsItemSelected(item) -> {
+                true
+            }
+            item.itemId == R.id.action_exit -> {
+                switchToHome()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 
