@@ -2,6 +2,7 @@ package de.hdmstuttgart.fitnessappmad1.fragments
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -77,15 +78,18 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
             }
         }
 
-        val intent = Intent(requireContext(), MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.putExtra("exercise", 5)
+        val pendingIntent = TaskStackBuilder.create(requireContext()).run {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, 0)
 
         notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_timer_24)
             .setContentTitle("Time over")
             .setContentText("sdsddssdds")
+            .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
 

@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity(), Communicator {
         createNotificationChannel()
         switchToHome()
 
+        when (intent.getIntExtra("exercise", 0)) {
+            5 -> switchToCountdown()
+            8 -> switchToFinish()
+        }
+
         toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
