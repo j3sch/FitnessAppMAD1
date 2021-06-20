@@ -14,12 +14,13 @@ import androidx.fragment.app.Fragment
 import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
 import de.hdmstuttgart.fitnessappmad1.activity.MainActivity
-import kotlinx.android.synthetic.main.fragment_countdown.*
+import de.hdmstuttgart.fitnessappmad1.databinding.FragmentCountdownBinding
 import kotlinx.coroutines.*
 
 class CountdownFragment : Fragment(R.layout.fragment_countdown) {
 
     private lateinit var communicator: Communicator
+    private lateinit var binding: FragmentCountdownBinding
 
     private val scope = CoroutineScope(Dispatchers.Main)
     private var isPaused = false
@@ -35,12 +36,13 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentCountdownBinding.bind(view)
 
         communicator = activity as Communicator
         setHasOptionsMenu(true)
         startCountdown(60000, 10)
 
-        btnStartStop.setOnClickListener {
+        binding.btnStartStop.setOnClickListener {
             if (!isPaused) {
                 isPaused = true
             } else {
@@ -49,24 +51,24 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
             }
         }
 
-        tvLast.setOnClickListener {
-            tvExercise.text = "Klimmzuege"
+        binding.tvLast.setOnClickListener {
+            binding.tvExercise.text = "Klimmzuege"
             scope.launch {
                 lastButton()
             }
         }
 
-        tvCurrent.setOnClickListener {
-            tvExercise.text = "Exercise"
+        binding.tvCurrent.setOnClickListener {
+            binding.tvExercise.text = "Exercise"
             scope.launch {
                 currentButton()
             }
         }
 
-        tvNext.setOnClickListener {
+        binding.tvNext.setOnClickListener {
             if (currentExercise < numberExercises) {
                 currentExercise++
-                tvExercise.text = "Liegestuetzen"
+                binding.tvExercise.text = "Liegestuetzen"
                 scope.launch {
                     nextButton()
                 }
@@ -96,14 +98,14 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
                 val textTimeRemaining = millisUntilFinished / 1000
                 val circleTimeRemaining = millisUntilFinished / 10
                 if (isPaused) {
-                    tvCountdown.text = textTimeRemaining.toString()
-                    pbCountdown.progress = circleTimeRemaining.toInt()
+                    binding.tvCountdown.text = textTimeRemaining.toString()
+                    binding.pbCountdown.progress = circleTimeRemaining.toInt()
                     resumeFromMillis = millisUntilFinished
                     cancel()
                 } else {
                     try {
-                        tvCountdown.text = textTimeRemaining.toString()
-                        pbCountdown.progress = circleTimeRemaining.toInt()
+                        binding.tvCountdown.text = textTimeRemaining.toString()
+                        binding.pbCountdown.progress = circleTimeRemaining.toInt()
                     } catch (e: Exception) {
                         cancel()
                         e.printStackTrace()
@@ -112,7 +114,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
             }
             override fun onFinish() {
                 notificationManager.notify(NOTIFICATION_ID, notification)
-                tvCountdown.text = "done!"
+                binding.tvCountdown.text = "done!"
             }
         }.start()
     }

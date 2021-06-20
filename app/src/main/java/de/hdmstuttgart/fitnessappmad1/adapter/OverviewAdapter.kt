@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import de.hdmstuttgart.fitnessappmad1.R
-import kotlinx.android.synthetic.main.item_overview.view.*
+import de.hdmstuttgart.fitnessappmad1.databinding.ItemOverviewBinding
 
 class OverviewAdapter(
-    var overview: List<Overview>,
+    private var overview: List<Overview>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<OverviewAdapter.OverviewViewHolder>() {
 
-    inner class OverviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    private lateinit var binding: ItemOverviewBinding
+
+    inner class OverviewViewHolder(binding: ItemOverviewBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 
         init {
@@ -28,15 +29,16 @@ class OverviewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OverviewViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_overview, parent, false)
-        return  OverviewViewHolder(view)
+        binding = ItemOverviewBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return  OverviewViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
         holder.itemView.apply {
-            tvOverviewTitle.text = overview[position].title
-            tvOverviewDisciplines.text = overview[position].disciplines
-            tvOverviewTime.text = overview[position].time
+            binding.tvOverviewTitle.text = overview[position].title
+            binding.tvOverviewDisciplines.text = overview[position].disciplines
+            binding.tvOverviewTime.text = overview[position].time
         }
     }
     

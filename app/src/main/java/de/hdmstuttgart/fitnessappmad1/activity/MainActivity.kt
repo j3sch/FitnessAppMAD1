@@ -11,10 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
+import de.hdmstuttgart.fitnessappmad1.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessappmad1.fragments.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), Communicator {
+
+    private lateinit var binding: ActivityMainBinding
 
     private val CHANNEL_ID = "channelID"
     private val CHANNEL_NAME = "channelName"
@@ -23,19 +25,20 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         createNotificationChannel()
         switchToHome()
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
+        toggle = ActionBarDrawerToggle(this, binding.drawerLayout, R.string.open, R.string.close)
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        navView.setNavigationItemSelectedListener {
-            drawerLayout.close()
+        binding.navView.setNavigationItemSelectedListener {
+            binding.drawerLayout.close()
             when (it.itemId) {
                 R.id.home -> switchToHome()
                 R.id.configure -> switchToConfigureTraining()

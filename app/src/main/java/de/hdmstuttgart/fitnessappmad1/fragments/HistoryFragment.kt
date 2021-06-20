@@ -10,14 +10,16 @@ import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
 import de.hdmstuttgart.fitnessappmad1.adapter.History
 import de.hdmstuttgart.fitnessappmad1.adapter.HistoryAdapter
-import kotlinx.android.synthetic.main.fragment_history.*
+import de.hdmstuttgart.fitnessappmad1.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment(R.layout.fragment_history), HistoryAdapter.OnItemClickListener {
 
     private lateinit var communicator: Communicator
+    private lateinit var binding: FragmentHistoryBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentHistoryBinding.bind(view)
 
         setHasOptionsMenu(true)
         communicator = activity as Communicator
@@ -28,8 +30,8 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryAdapter.OnIt
             )
 
         val adapter = HistoryAdapter(historyList, this)
-        rvHistory.adapter = adapter
-        rvHistory.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvHistory.adapter = adapter
+        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

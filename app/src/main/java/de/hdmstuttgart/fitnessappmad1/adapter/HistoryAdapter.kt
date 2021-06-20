@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import de.hdmstuttgart.fitnessappmad1.R
-import kotlinx.android.synthetic.main.item_history.view.*
+import de.hdmstuttgart.fitnessappmad1.databinding.ItemHistoryBinding
 
 class HistoryAdapter(
-    var histories: List<History>,
+    private var histories: List<History>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
-    inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    private lateinit var binding: ItemHistoryBinding
+
+    inner class HistoryViewHolder(binding: ItemHistoryBinding) : RecyclerView.ViewHolder(binding.root),
     View.OnClickListener {
 
         init {
@@ -28,13 +29,14 @@ class HistoryAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history, parent, false)
-        return  HistoryViewHolder(view)
+        binding = ItemHistoryBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return  HistoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.itemView.apply {
-            tvHistoryTitle.text = histories[position].title
+            binding.tvHistoryTitle.text = histories[position].title
         }
     }
 

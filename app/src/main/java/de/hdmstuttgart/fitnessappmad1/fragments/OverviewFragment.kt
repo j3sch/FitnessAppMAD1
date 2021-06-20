@@ -11,14 +11,16 @@ import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
 import de.hdmstuttgart.fitnessappmad1.adapter.Overview
 import de.hdmstuttgart.fitnessappmad1.adapter.OverviewAdapter
-import kotlinx.android.synthetic.main.fragment_overview.*
+import de.hdmstuttgart.fitnessappmad1.databinding.FragmentOverviewBinding
 
 class OverviewFragment : Fragment(R.layout.fragment_overview), OverviewAdapter.OnItemClickListener {
 
     private lateinit var communicator: Communicator
+    private lateinit var binding: FragmentOverviewBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentOverviewBinding.bind(view)
 
         setHasOptionsMenu(true)
         communicator = activity as Communicator
@@ -38,10 +40,10 @@ class OverviewFragment : Fragment(R.layout.fragment_overview), OverviewAdapter.O
         )
 
         val adapter = OverviewAdapter(overviewList, this)
-        rvOverview.adapter = adapter
-        rvOverview.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvOverview.adapter = adapter
+        binding.rvOverview.layoutManager = LinearLayoutManager(requireContext())
 
-        btnStartTraining.setOnClickListener {
+        binding.btnStartTraining.setOnClickListener {
             communicator.switchToCountdown()
         }
     }
