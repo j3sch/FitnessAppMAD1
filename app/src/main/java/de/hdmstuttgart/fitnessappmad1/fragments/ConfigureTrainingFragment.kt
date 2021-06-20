@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import com.google.android.material.slider.RangeSlider
-import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
 import kotlinx.android.synthetic.main.fragment_configure_training.*
 import kotlin.math.roundToInt
