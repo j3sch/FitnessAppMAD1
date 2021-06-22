@@ -13,6 +13,8 @@ import kotlin.math.roundToInt
 
 class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training) {
 
+    var time: Float = 3.00f;
+
     private lateinit var binding: FragmentConfigureTrainingBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,6 +43,22 @@ class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training)
                     binding.tvSchluss.text = getString(R.string.schluss, (binding.rangeSlider.valueTo - values[1]).roundToInt().toString())
                 }
             })
+
+        binding.btnMinus.setOnClickListener {
+            if (time > 1) {
+                val newTime = time - 0.25f;
+                time = newTime
+                binding.tvTrainingTime.text = String.format("%.2f", newTime)
+            }
+        }
+
+        binding.btnPlus.setOnClickListener {
+            if (time < 5) {
+                val newTime = time + 0.25f;
+                time = newTime
+                binding.tvTrainingTime.text = String.format("%.2f", newTime)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
