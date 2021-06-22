@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
@@ -49,10 +48,10 @@ class OverviewFragment : Fragment(R.layout.fragment_overview), OverviewAdapter.O
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_exit, menu)
+        inflater.inflate(R.menu.to_home, menu)
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(requireContext(), "Clicked Settings", Toast.LENGTH_SHORT).show()
+        communicator.switchToExerciseDescription()
     }
 }

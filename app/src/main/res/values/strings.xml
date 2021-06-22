@@ -2,8 +2,8 @@
     <string name="app_name">FitnessAppMAD1</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="aufwaermen">Aufwärmen = %1$s</string>
-    <string name="hauptteil">Hauptteil = %1$s</string>
-    <string name="schluss">Schluss = %1$s</string>
+    <string name="aufwaermen">Aufwärmen = %1$s\%%</string>
+    <string name="hauptteil">Hauptteil = %1$s\%%</string>
+    <string name="schluss">Schluss = %1$s\%%</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

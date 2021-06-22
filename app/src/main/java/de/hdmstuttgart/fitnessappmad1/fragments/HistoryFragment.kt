@@ -35,7 +35,7 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryAdapter.OnIt
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_exit, menu)
+        inflater.inflate(R.menu.to_home, menu)
     }
 
     override fun onItemClick(position: Int) {

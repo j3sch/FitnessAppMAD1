@@ -7,51 +7,60 @@
     tools:context=".fragments.ConfigureTrainingFragment"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/tvAufwaermen"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="@string/aufwaermen"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvHauptteil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/hauptteil"
-        android:textSize="20sp"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAufwaermen" />
-
-    <TextView
-        android:id="@+id/tvSchluss"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="81dp"
-        android:text="@string/schluss"
-        android:textSize="20sp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/rangeSlider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHauptteil" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9">
+
+        <TextView
+            android:id="@+id/tvAufwaermen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aufwaermen"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHauptteil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/hauptteil"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvSchluss"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAufwaermen" />
+
+        <TextView
+            android:id="@+id/tvSchluss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schluss"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/rangeSlider"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/rangeSlider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:stepSize="1"
+        android:stepSize="5"
         android:valueFrom="0"
-        android:valueTo="10"
+        android:valueTo="100"
         app:labelBehavior="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75"
         app:values="@array/initial_slider_values" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

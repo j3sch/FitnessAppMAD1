@@ -21,9 +21,9 @@ class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training)
 
         setHasOptionsMenu(true)
 
-        binding.tvAufwaermen.text = getString(R.string.aufwaermen, 2.toString())
-        binding.tvHauptteil.text = getString(R.string.hauptteil, 5.toString())
-        binding.tvSchluss.text = getString(R.string.schluss, 3.toString())
+        binding.tvAufwaermen.text = getString(R.string.aufwaermen, 25.toString())
+        binding.tvHauptteil.text = getString(R.string.hauptteil, 55.toString())
+        binding.tvSchluss.text = getString(R.string.schluss, 80.toString())
 
         binding.rangeSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
                 override fun onStartTrackingTouch(slider: RangeSlider) {
@@ -44,6 +44,6 @@ class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_exit, menu)
+        inflater.inflate(R.menu.to_home, menu)
     }
 }

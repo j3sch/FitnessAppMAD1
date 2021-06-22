@@ -59,8 +59,12 @@ class MainActivity : AppCompatActivity(), Communicator {
             toggle.onOptionsItemSelected(item) -> {
                 true
             }
-            item.itemId == R.id.action_exit -> {
+            item.itemId == R.id.to_home -> {
                 switchToHome()
+                true
+            }
+            item.itemId == R.id.to_overview -> {
+                switchToOverview()
                 true
             }
             else -> {
@@ -113,6 +117,14 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val finishFragment = FinishFragment()
             replace(R.id.flFragment, finishFragment)
+            commit()
+        }
+    }
+
+    override fun switchToExerciseDescription() {
+        supportFragmentManager.beginTransaction().apply {
+            val exerciseDescription = ExerciseDescriptionFragment()
+            replace(R.id.flFragment, exerciseDescription)
             commit()
         }
     }

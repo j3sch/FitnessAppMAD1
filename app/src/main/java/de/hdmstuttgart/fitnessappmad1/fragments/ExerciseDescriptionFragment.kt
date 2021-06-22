@@ -1,32 +1,25 @@
 package de.hdmstuttgart.fitnessappmad1.fragments
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.View
 import de.hdmstuttgart.fitnessappmad1.Communicator
 import de.hdmstuttgart.fitnessappmad1.R
-import de.hdmstuttgart.fitnessappmad1.databinding.FragmentFinishBinding
+import de.hdmstuttgart.fitnessappmad1.databinding.FragmentExerciseDescriptionBinding
 
-class FinishFragment : Fragment(R.layout.fragment_finish) {
-
+class ExerciseDescriptionFragment : Fragment(R.layout.fragment_exercise_description) {
     private lateinit var communicator: Communicator
-    private lateinit var binding: FragmentFinishBinding
+    private lateinit var binding: FragmentExerciseDescriptionBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentFinishBinding.bind(view)
+        binding = FragmentExerciseDescriptionBinding.bind(view)
 
         setHasOptionsMenu(true)
         communicator = activity as Communicator
-
-        binding.tvBackToHome.setOnClickListener {
-            communicator.switchToHome()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.to_home, menu)
+        inflater.inflate(R.menu.to_overview, menu)
     }
 }

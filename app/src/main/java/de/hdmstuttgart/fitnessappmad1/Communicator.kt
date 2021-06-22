@@ -13,4 +13,6 @@ interface Communicator {
     fun switchToFinish()
 
     fun switchToConfigureTraining()
+
+    fun switchToExerciseDescription()
 }

@@ -151,6 +151,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_exit, menu)
+        inflater.inflate(R.menu.to_home, menu)
     }
 }
