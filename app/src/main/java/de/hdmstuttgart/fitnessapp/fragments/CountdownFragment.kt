@@ -12,9 +12,13 @@ import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity
+import de.hdmstuttgart.fitnessapp.database.DataBase
+import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
+import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import kotlinx.coroutines.*
 
@@ -23,7 +27,10 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private lateinit var communicator: Communicator
     private lateinit var binding: FragmentCountdownBinding
 
-    private val scope = CoroutineScope(Dispatchers.Main)
+    private lateinit var exerciseRepo: ExerciseRepository
+    private lateinit var mMovieViewModel: ExerciseViewModel
+
+    private val scope = CoroutineScope(SupervisorJob())
     private var isPaused = false
     private var resumeFromMillis: Long = 0
 
@@ -35,6 +42,8 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private val numberExercises = 7;
     private var currentExercise = 0;
 
+    private lateinit var currentExerciseName: String
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCountdownBinding.bind(view)
@@ -42,6 +51,19 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         communicator = activity as Communicator
         setHasOptionsMenu(true)
         startCountdown(60000, 10)
+
+        mMovieViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
+
+
+        val database =  DataBase.getInstance(requireContext(), scope)
+        exerciseRepo = ExerciseRepository(database.exerciseDao())
+
+        scope.launch {
+            currentExerciseName = exerciseRepo.getAllExercises()[0].name
+            binding.tvExercise.text = currentExerciseName
+            println(exerciseRepo.getAllExercises()[0].name)
+        }
+
 
         binding.btnStartStop.setOnClickListener {
             if (!isPaused) {
@@ -69,7 +91,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         binding.tvNext.setOnClickListener {
             if (currentExercise < numberExercises) {
                 currentExercise++
-                binding.tvExercise.text = "Liegestuetzen"
                 scope.launch {
                     nextButton()
                 }
@@ -87,8 +108,8 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
 
         notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_timer_24)
-            .setContentTitle("Time over")
-            .setContentText("sdsddssdds")
+            .setContentTitle("Zeit vorbei")
+            .setContentText("Deine Zeit für die Übung " + currentExerciseName + " ist abgelaufen")
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
@@ -96,7 +117,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         notificationManager = NotificationManagerCompat.from(requireContext())
     }
 
-    private fun startCountdown(millisInFuture: Long,countDownInterval: Long) {
+    private fun startCountdown(millisInFuture: Long, countDownInterval: Long) {
         object : CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
                 val textTimeRemaining = millisUntilFinished / 1000
@@ -127,6 +148,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(100)
         withContext (Dispatchers.Main) {
+            binding.tvExercise.text = exerciseRepo.getAllExercises()[1].name
             isPaused = false
             startCountdown(60000, 10)
         }

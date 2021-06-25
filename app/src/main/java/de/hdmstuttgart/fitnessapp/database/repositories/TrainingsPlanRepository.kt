@@ -3,7 +3,6 @@ package de.hdmstuttgart.fitnessapp.database.repositories
 import de.hdmstuttgart.fitnessapp.database.daos.TrainingsPlanDao
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 
-
 class TrainingsPlanRepository (private val trainingsPlanDao: TrainingsPlanDao) {
 
     suspend fun insertTrainingsPlan(trainingsPlan: TrainingsPlan) = trainingsPlanDao.insertOrUpdateTrainingsPlan(trainingsPlan)
