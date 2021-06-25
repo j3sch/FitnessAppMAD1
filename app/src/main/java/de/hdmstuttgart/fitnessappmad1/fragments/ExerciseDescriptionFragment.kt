@@ -17,10 +17,6 @@ class ExerciseDescriptionFragment : Fragment(R.layout.fragment_exercise_descript
 
         setHasOptionsMenu(true)
         communicator = activity as Communicator
-
-        binding.btnSelectExercise.setOnClickListener {
-            communicator.switchToChooseExercise()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
