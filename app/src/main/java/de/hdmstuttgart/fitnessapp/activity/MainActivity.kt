@@ -11,17 +11,10 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
-import de.hdmstuttgart.fitnessapp.database.DataBase
-import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
-import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
-import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
-import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), Communicator {
-
-    lateinit var exerciseRepo: ExerciseRepository
 
     private lateinit var binding: ActivityMainBinding
 
@@ -60,20 +53,6 @@ class MainActivity : AppCompatActivity(), Communicator {
                     }
             }
             true
-        }
-
-        val applicationScope = CoroutineScope(SupervisorJob())
-
-        val database =  DataBase.getInstance(this, applicationScope)
-        exerciseRepo = ExerciseRepository(database.exerciseDao())
-        val disciplineRepo = DisciplineRepository(database.disciplineDao())
-        val trainingsPlanRepo = TrainingsPlanRepository(database.trainingsPlanDao())
-
-        GlobalScope.launch(Dispatchers.IO) {
-            val bb = disciplineRepo.getAllDisciplines()
-            for (b in bb) {
-                print(b)
-            }
         }
     }
 

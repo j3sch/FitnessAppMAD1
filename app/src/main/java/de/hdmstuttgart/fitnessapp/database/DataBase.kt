@@ -64,7 +64,6 @@ abstract class DataBase : RoomDatabase() {
                 .addCallback(DatabaseCallback(scope))
                 .build()
         }
-
     }
 }
 

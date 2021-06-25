@@ -21,7 +21,7 @@ class FinishFragment : Fragment(R.layout.fragment_finish) {
         setHasOptionsMenu(true)
         communicator = activity as Communicator
 
-        binding.tvBackToHome.setOnClickListener {
+        binding.btnBackToHome.setOnClickListener {
             communicator.switchToHome()
         }
     }
