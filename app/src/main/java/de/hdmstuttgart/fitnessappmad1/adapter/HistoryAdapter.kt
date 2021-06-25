@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import de.hdmstuttgart.fitnessappmad1.databinding.ItemHistoryBinding
+import de.hdmstuttgart.fitnessappmad1.fragments.HistoryFragment
 
 class HistoryAdapter(
     private var histories: List<History>,
-    private val listener: OnItemClickListener
+    private val listener: HistoryFragment,
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     private lateinit var binding: ItemHistoryBinding
