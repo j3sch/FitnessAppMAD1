@@ -23,6 +23,10 @@ import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import kotlinx.coroutines.*
 
 class CountdownFragment : Fragment(R.layout.fragment_countdown) {
+    companion object {
+        const val CHANNEL_ID = "channelID"
+        const val NOTIFICATION_ID = 0
+    }
 
     private lateinit var communicator: Communicator
     private lateinit var binding: FragmentCountdownBinding
@@ -34,13 +38,11 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private var isPaused = false
     private var resumeFromMillis: Long = 0
 
-    private val CHANNEL_ID = "channelID"
-    private val NOTIFICATION_ID = 0
     lateinit var notification: Notification
     lateinit var notificationManager: NotificationManagerCompat
 
-    private val numberExercises = 7;
-    private var currentExercise = 0;
+    private val numberExercises = 7
+    private var currentExercise = 0
 
     private lateinit var currentExerciseName: String
 
@@ -63,7 +65,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
             binding.tvExercise.text = currentExerciseName
             println(exerciseRepo.getAllExercises()[0].name)
         }
-
 
         binding.btnStartStop.setOnClickListener {
             if (!isPaused) {
@@ -109,7 +110,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_timer_24)
             .setContentTitle("Zeit vorbei")
-            .setContentText("Deine Zeit für die Übung " + currentExerciseName + " ist abgelaufen")
+            .setContentText("Deine Zeit für die Übung $currentExerciseName ist abgelaufen")
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
             .build()
