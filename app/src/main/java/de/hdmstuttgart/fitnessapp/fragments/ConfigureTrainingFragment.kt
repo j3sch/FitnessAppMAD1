@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asFlow
 import com.google.android.material.slider.RangeSlider
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.databinding.FragmentConfigureTrainingBinding
@@ -36,18 +37,14 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
             binding.tvTrainingTime.text = String.format("%.2f", trainingLength)
         })
 
-        dataStoreViewModel.readFirstSliderValue.observe(viewLifecycleOwner, { value ->
-            firstSliderValue = value
+        dataStoreViewModel.readFirstSliderValue.observe(viewLifecycleOwner, { value1 ->
+            dataStoreViewModel.readSecondSliderValue.observe(viewLifecycleOwner, { value2 ->
+                binding.rangeSlider.values = mutableListOf(value1, value2)
+                binding.tvWarmUp.text = getString(R.string.warm_up, value1.roundToInt().toString() + "%")
+                binding.tvMainPart.text = getString(R.string.main_part, ( value2 -  value1).roundToInt().toString() + "%")
+                binding.tvEnd.text = getString(R.string.end, (binding.rangeSlider.valueTo -  value2).roundToInt().toString() + "%")
+            })
         })
-
-        dataStoreViewModel.readSecondSliderValue.observe(viewLifecycleOwner, { value ->
-            secondSliderValue = value
-        })
-
-        binding.rangeSlider.values = mutableListOf(secondSliderValue, firstSliderValue)
-        binding.tvWarmUp.text = getString(R.string.warm_up, 25.toString() + "%")
-        binding.tvMainPart.text = getString(R.string.main_part, 55.toString() + "%")
-        binding.tvEnd.text = getString(R.string.end, 80.toString() +"%")
 
         binding.rangeSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
                 override fun onStartTrackingTouch(slider: RangeSlider) {
@@ -61,9 +58,6 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
                     dataStoreViewModel.saveSliderValues(values[0], values[1])
                     Log.d("onStopTrackingTouch From", values[0].toString())
                     Log.d("onStopTrackingTouch T0", values[1].toString())
-                    binding.tvWarmUp.text = getString(R.string.warm_up, values[0].roundToInt().toString() + "%")
-                    binding.tvMainPart.text = getString(R.string.main_part, (values[1] - values[0]).roundToInt().toString() + "%")
-                    binding.tvEnd.text = getString(R.string.end, (binding.rangeSlider.valueTo - values[1]).roundToInt().toString() + "%")
                 }
             })
 
