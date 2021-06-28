@@ -3,15 +3,15 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/configure"
-        android:title="Trainingsplan konfigurieren" />
+        android:title="@string/configure_training" />
     <item
         android:id="@+id/history"
-        android:title="Trainingsplan History" />
+        android:title="@string/trainingsplan_history" />
     <item
         android:id="@+id/settings"
-        android:title="Settings" />
+        android:title="@string/settings" />
 
 </menu>
