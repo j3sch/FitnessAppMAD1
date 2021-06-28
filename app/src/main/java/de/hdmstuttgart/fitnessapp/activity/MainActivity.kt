@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val timerFragment = CountdownFragment()
             replace(R.id.flFragment, timerFragment)
+            addToBackStack("attachCountDown")
             commit()
         }
     }
@@ -89,6 +90,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val homeFragment = HomeFragment()
             replace(R.id.flFragment, homeFragment)
+            addToBackStack("attachHome")
             commit()
         }
     }
@@ -97,6 +99,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val configureTraining = ConfigureTrainingFragment()
             replace(R.id.flFragment, configureTraining)
+            addToBackStack("attachConfigureTraining")
             commit()
         }
     }
@@ -105,6 +108,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val overviewFragment = OverviewFragment()
             replace(R.id.flFragment, overviewFragment)
+            addToBackStack("attachOverview")
             commit()
         }
     }
@@ -113,6 +117,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val historyFragment = HistoryFragment()
             replace(R.id.flFragment, historyFragment)
+            addToBackStack("attachHistory")
             commit()
         }
     }
@@ -121,6 +126,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val finishFragment = FinishFragment()
             replace(R.id.flFragment, finishFragment)
+            addToBackStack("attachFinish")
             commit()
         }
     }
@@ -129,6 +135,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         supportFragmentManager.beginTransaction().apply {
             val exerciseDescription = ExerciseDescriptionFragment()
             replace(R.id.flFragment, exerciseDescription)
+            addToBackStack("attachExerciseDescription")
             commit()
         }
     }

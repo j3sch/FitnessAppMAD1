@@ -12,13 +12,11 @@ import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity
 import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
-import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import kotlinx.coroutines.*
 
@@ -32,7 +30,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private lateinit var binding: FragmentCountdownBinding
 
     private lateinit var exerciseRepo: ExerciseRepository
-    private lateinit var mMovieViewModel: ExerciseViewModel
 
     private val scope = CoroutineScope(SupervisorJob())
     private var isPaused = false
@@ -44,7 +41,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private val numberExercises = 7
     private var currentExercise = 0
 
-    private lateinit var currentExerciseName: String
+    private var currentExerciseName = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,16 +51,18 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         setHasOptionsMenu(true)
         startCountdown(60000, 10)
 
-        mMovieViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
-
-
         val database =  DataBase.getInstance(requireContext(), scope)
         exerciseRepo = ExerciseRepository(database.exerciseDao())
 
-        scope.launch {
-            currentExerciseName = exerciseRepo.getAllExercises()[0].name
-            binding.tvExercise.text = currentExerciseName
-            println(exerciseRepo.getAllExercises()[0].name)
+        scope.launch(Dispatchers.IO) {
+            try {
+                currentExerciseName = exerciseRepo.getAllExercises()[0].name
+                withContext(Dispatchers.Main) {
+                    binding.tvExercise.text = currentExerciseName
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         binding.btnStartStop.setOnClickListener {

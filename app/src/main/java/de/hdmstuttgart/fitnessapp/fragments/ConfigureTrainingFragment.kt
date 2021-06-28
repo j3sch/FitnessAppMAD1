@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.slider.RangeSlider
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.databinding.FragmentConfigureTrainingBinding
-import java.text.DecimalFormat
 import kotlin.math.round
 import kotlin.math.roundToInt
 
@@ -48,7 +47,6 @@ class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training)
 
         binding.btnMinus.setOnClickListener {
             val newTime: Float;
-
             if (time > 1) {
                 newTime = if (time % 1f == 0f) {
                     time - 0.55f;
