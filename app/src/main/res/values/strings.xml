@@ -2,8 +2,28 @@
     <string name="app_name">FitnessAppMAD1</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="aufwaermen">Aufwärmen = %1$s</string>
-    <string name="hauptteil">Hauptteil = %1$s</string>
-    <string name="schluss">Schluss = %1$s</string>
+    <string name="warm_up">Aufwärmen = %1$s</string>
+    <string name="main_part">Hauptteil = %1$s</string>
+    <string name="end">Schluss = %1$s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="generate_training_session">Generate \n Trainingsplan</string>
+    <string name="start_training">Start Training</string>
+    <string name="title">title</string>
+    <string name="discipline">discipline</string>
+    <string name="time">05:00</string>
+    <string name="training_session_completed">Deine abgeschlossenen Trainingseinheiten</string>
+    <string name="training_finished">Das Training wurde erfolgreich abgeschlossen</string>
+    <string name="back_to_home">Zurück zu Home</string>
+    <string name="description">description</string>
+    <string name="current">Current</string>
+    <string name="next">Next</string>
+    <string name="last">Last</string>
+    <string name="standard_time">03:00</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="length_of_training">Wähle die Länge des Trainings</string>
+    <string name="configure_proportion_training">Konfiguriere die Anteile von Aufwärmen, Hauptteil und den Schluss</string>
+    <string name="name_of_exercise">Exercise</string>
+    <string name="countdown_time">10:00</string>
+    <string name="start_stop">Start/Stop</string>
 </resources>

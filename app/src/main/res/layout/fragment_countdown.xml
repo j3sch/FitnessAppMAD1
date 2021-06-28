@@ -6,50 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CountdownFragment">
 
-    <TextView
-        android:id="@+id/tvLast"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="14dp"
-        android:text="last"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvExercise"
-        app:layout_constraintEnd_toStartOf="@+id/tvCurrent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvCurrent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="current"
-        android:textSize="27sp"
-        android:padding="14dp"
         app:layout_constraintBottom_toTopOf="@+id/tvExercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvNext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="14dp"
-        android:text="next"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/tvExercise"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toEndOf="@+id/tvCurrent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tvLast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:text="@string/last"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvExercise"
+            app:layout_constraintEnd_toStartOf="@+id/tvCurrent"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:text="@string/current"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvExercise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:text="@string/next"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvExercise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/tvCurrent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/tvExercise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="56dp"
-        android:text="Exercise"
+        android:text="@string/name_of_exercise"
         android:textSize="32sp"
         app:layout_constraintBottom_toTopOf="@+id/pbCountdown"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +70,7 @@
         android:id="@+id/tvCountdown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10:00"
+        android:text="@string/countdown_time"
         android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,23 +79,25 @@
 
     <ProgressBar
         android:id="@+id/pbCountdown"
+        style="?android:progressBarStyleHorizontal"
         android:layout_width="306dp"
         android:layout_height="306dp"
+        android:max="6000"
+        android:progress="6000"
+        android:progressDrawable="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:progress="6000"
-        android:max="6000"
-        style="?android:progressBarStyleHorizontal"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:progressDrawable="@drawable/circle"/>
+        app:layout_constraintVertical_bias="0.498" />
 
     <Button
         android:id="@+id/btnStartStop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:text="Start/Stop"
+        android:text="@string/start_stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -9,10 +9,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.lifecycle.ViewModelProvider
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
-import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
 
@@ -79,8 +77,8 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     override fun switchToCountdown() {
         supportFragmentManager.beginTransaction().apply {
-            val timerFragment = CountdownFragment()
-            replace(R.id.flFragment, timerFragment)
+            val countdownFragment = CountdownFragment()
+            replace(R.id.flFragment, countdownFragment)
             addToBackStack("attachCountDown")
             commit()
         }

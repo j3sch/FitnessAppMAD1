@@ -24,9 +24,9 @@ class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training)
 
         setHasOptionsMenu(true)
 
-        binding.tvAufwaermen.text = getString(R.string.aufwaermen, 25.toString() + "%")
-        binding.tvHauptteil.text = getString(R.string.hauptteil, 55.toString() + "%")
-        binding.tvSchluss.text = getString(R.string.schluss, 80.toString() +"%")
+        binding.tvWarmUp.text = getString(R.string.warm_up, 25.toString() + "%")
+        binding.tvMainPart.text = getString(R.string.main_part, 55.toString() + "%")
+        binding.tvEnd.text = getString(R.string.end, 80.toString() +"%")
 
         binding.rangeSlider.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
                 override fun onStartTrackingTouch(slider: RangeSlider) {
@@ -39,9 +39,9 @@ class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training)
                     val values = binding.rangeSlider.values
                     Log.d("onStopTrackingTouch From", values[0].toString())
                     Log.d("onStopTrackingTouch T0", values[1].toString())
-                    binding.tvAufwaermen.text = getString(R.string.aufwaermen, values[0].roundToInt().toString() + "%")
-                    binding.tvHauptteil.text = getString(R.string.hauptteil, (values[1] - values[0]).roundToInt().toString() + "%")
-                    binding.tvSchluss.text = getString(R.string.schluss, (binding.rangeSlider.valueTo - values[1]).roundToInt().toString() + "%")
+                    binding.tvWarmUp.text = getString(R.string.warm_up, values[0].roundToInt().toString() + "%")
+                    binding.tvMainPart.text = getString(R.string.main_part, (values[1] - values[0]).roundToInt().toString() + "%")
+                    binding.tvEnd.text = getString(R.string.end, (binding.rangeSlider.valueTo - values[1]).roundToInt().toString() + "%")
                 }
             })
 

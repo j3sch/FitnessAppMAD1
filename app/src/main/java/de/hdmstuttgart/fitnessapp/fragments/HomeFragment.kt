@@ -9,16 +9,14 @@ import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 
 class HomeFragment :  Fragment(R.layout.fragment_home) {
 
-    private lateinit var communicator: Communicator
     private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-        communicator = activity as Communicator
-
         binding.btnGenerate.setOnClickListener {
+            val communicator = activity as Communicator
             communicator.switchToOverview()
         }
     }

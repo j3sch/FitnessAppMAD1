@@ -26,5 +26,14 @@
         android:id="@+id/countdownFragment"
         android:name="de.hdmstuttgart.fitnessapp.fragments.CountdownFragment"
         android:label="fragment_countdown"
-        tools:layout="@layout/fragment_countdown" />
+        tools:layout="@layout/fragment_countdown" >
+        <action
+            android:id="@+id/action_countdownFragment_to_finishFragment"
+            app:destination="@id/finishFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishFragment"
+        android:name="de.hdmstuttgart.fitnessapp.fragments.FinishFragment"
+        android:label="fragment_finish"
+        tools:layout="@layout/fragment_finish" />
 </navigation>

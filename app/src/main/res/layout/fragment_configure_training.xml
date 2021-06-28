@@ -12,53 +12,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Wähle die Länge des Trainings"
+        android:text="@string/length_of_training"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
+    <Button
+        android:id="@+id/btnMinus"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/minus"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/tvTrainingTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
+        android:padding="20dp"
+        android:text="@string/standard_time"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <Button
-            android:id="@+id/btnMinus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="-" />
-
-        <TextView
-            android:id="@+id/tvTrainingTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="03:00"
-            android:textSize="28sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnPlus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="+" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnPlus"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/plus"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Konfiguriere die Anteile von Aufwärmen, Hauptteil und den Schluss"
+        android:layout_marginBottom="60dp"
+        android:text="@string/configure_proportion_training"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -69,38 +76,37 @@
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/rangeSlider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/tvAufwaermen"
+            android:id="@+id/tvWarmUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/aufwaermen"
+            android:text="@string/warm_up"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvHauptteil"
+            android:id="@+id/tvMainPart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/hauptteil"
+            android:text="@string/main_part"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvSchluss"
+            app:layout_constraintBottom_toTopOf="@+id/tvEnd"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAufwaermen" />
+            app:layout_constraintTop_toBottomOf="@+id/tvWarmUp" />
 
         <TextView
-            android:id="@+id/tvSchluss"
+            android:id="@+id/tvEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/schluss"
+            android:text="@string/end"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/rangeSlider"
             app:layout_constraintStart_toStartOf="parent" />
@@ -110,14 +116,15 @@
         android:id="@+id/rangeSlider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:stepSize="5"
         android:valueFrom="0"
         android:valueTo="100"
         app:labelBehavior="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75"
         app:values="@array/initial_slider_values" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

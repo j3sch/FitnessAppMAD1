@@ -10,7 +10,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Deine abgeschlossenen Trainingseinheiten"
+        android:text="@string/training_session_completed"
         android:textSize="26sp"
         android:textStyle="bold"
         android:padding="20sp"

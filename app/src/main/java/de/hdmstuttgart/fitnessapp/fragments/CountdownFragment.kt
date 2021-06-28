@@ -26,7 +26,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         const val NOTIFICATION_ID = 0
     }
 
-    private lateinit var communicator: Communicator
     private lateinit var binding: FragmentCountdownBinding
 
     private lateinit var exerciseRepo: ExerciseRepository
@@ -47,7 +46,6 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCountdownBinding.bind(view)
 
-        communicator = activity as Communicator
         setHasOptionsMenu(true)
         startCountdown(60000, 10)
 
@@ -89,6 +87,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         }
 
         binding.tvNext.setOnClickListener {
+            val communicator = activity as Communicator
             if (currentExercise < numberExercises) {
                 currentExercise++
                 scope.launch {
