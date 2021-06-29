@@ -58,12 +58,10 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         exerciseRepo = ExerciseRepository(database.exerciseDao())
 
         val generator = TrainingsPlanGenerator(requireContext(), scope)
-        val disciplineRepo = DisciplineRepository(database.disciplineDao())
-        val disciplineViewModel = DisciplineViewModel(disciplineRepo)
 
-//        scope.launch() {
-//            generator.createTrainingsPlan("newPlan22", 120, 0.15F, 0.70F, 0.15F)
-//        }
+       scope.launch() {
+           generator.createTrainingsPlan("newPlan22", 120, 0.125F, 0.75F, 0.125F)
+       }
 
         binding.btnStartStop.setOnClickListener {
             if (!isPaused) {

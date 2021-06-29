@@ -3,6 +3,7 @@ package de.hdmstuttgart.fitnessapp.database.viewmodels
 import androidx.lifecycle.*
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
+import de.hdmstuttgart.fitnessapp.database.entities.relations.DisciplineWithExercises
 import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import kotlinx.coroutines.launch
 
@@ -40,8 +41,8 @@ class DisciplineViewModel(private val repository: DisciplineRepository) : ViewMo
         return result
     }
 
-    fun getExercisesForDiscipline(discipline: Discipline): LiveData<List<Exercise>> {
-        val result = MutableLiveData<List<Exercise>>()
+    fun getExercisesForDiscipline(discipline: Discipline): LiveData<List<DisciplineWithExercises>> {
+        val result = MutableLiveData<List<DisciplineWithExercises>>()
         viewModelScope.launch {
             result.postValue(repository.getExercisesForDiscipline(discipline))
         }

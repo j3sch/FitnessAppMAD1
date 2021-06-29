@@ -10,6 +10,8 @@ import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseTPRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
+import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
+import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
 import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import kotlinx.coroutines.CoroutineScope
 import java.time.LocalDateTime
@@ -18,7 +20,7 @@ import java.time.format.DateTimeFormatter
 class TrainingsPlanGenerator(
     val context: Context,
     val scope: CoroutineScope
-    ) {
+) {
 
     companion object {
         const val introDisciplineName = "Einleitung"
@@ -29,7 +31,13 @@ class TrainingsPlanGenerator(
     val dataBase = DataBase.getInstance(context, scope)
     var exercisesForTrainingsPlan: ArrayList<Exercise> = arrayListOf()
 
-    fun createTrainingsPlan(
+    //Repos and ViewModels
+    val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
+    val exerciseRepo = ExerciseRepository(dataBase.exerciseDao())
+    val trainingsPlanRepo = TrainingsPlanRepository(dataBase.trainingsPlanDao())
+    val exerciseTPRepo = ExerciseTPRepository(dataBase.exerciseTPDao())
+
+    suspend fun createTrainingsPlan(
         name: String,
         maximumTime: Int,
         paramIntro: Float,
@@ -37,11 +45,9 @@ class TrainingsPlanGenerator(
         paramOutro: Float
     ) {
         val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern(datePattern))
-        val trainingsPlanRepo = TrainingsPlanRepository(dataBase.trainingsPlanDao())
-        val exerciseTPRepository = ExerciseTPRepository(dataBase.exerciseTPDao())
-        val trainingsPlanViewModel = TrainingsPlanViewModel(trainingsPlanRepo)
+
         val trainingsPlan = TrainingsPlan(name, date)
-        trainingsPlanViewModel.insertTrainingsPlan(trainingsPlan)
+        val newTrainingsPlanId = trainingsPlanRepo.insertTrainingsPlan(trainingsPlan)
 
         val durationIntro = maximumTime * paramIntro
         val durationMain = (maximumTime * paramMain) / 2
@@ -53,45 +59,45 @@ class TrainingsPlanGenerator(
         for (discipline in disciplines) {
             when (discipline.name) {
                 introDisciplineName -> {
-                    exercisesForTrainingsPlan.addAll(
-                        getExercisesForDiscipline(
-                            discipline,
-                            durationIntro
-                        )
-                    )
+                    val exercises = getExercisesForDiscipline(discipline, durationIntro)
+                    println(discipline.name)
+                    printList(exercises)
+                    exercisesForTrainingsPlan.addAll(exercises)
                 }
                 outroDisciplineName -> {
-                    exercisesForTrainingsPlan.addAll(
-                        getExercisesForDiscipline(
-                            discipline,
-                            durationOutro
-                        )
-                    )
+                    val exercises = getExercisesForDiscipline(discipline, durationOutro)
+                    println(discipline.name)
+                    printList(exercises)
+                    exercisesForTrainingsPlan.addAll(exercises)
                 }
                 else -> {
-                    exercisesForTrainingsPlan.addAll(
-                        getExercisesForDiscipline(
-                            discipline,
-                            durationMain
-                        )
-                    )
+                    val exercises = getExercisesForDiscipline(discipline, durationMain)
+                    println(discipline.name)
+                    printList(exercises)
+                    exercisesForTrainingsPlan.addAll(exercises)
                 }
             }
         }
-        printList(exercisesForTrainingsPlan)
-
-
+        //fillExerciseTrainingsPlanCrossRef(trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt()), exercisesForTrainingsPlan)
     }
-    private fun fillExerciseTrainingsPlanCrossRef(trainingsPlan: TrainingsPlan, trainingsPlanExercises: List<Exercise>): List<ExerciseTrainingsPlanCrossRef>{
+
+    private fun fillExerciseTrainingsPlanCrossRef(
+        trainingsPlan: TrainingsPlan,
+        trainingsPlanExercises: List<Exercise>
+    ): List<ExerciseTrainingsPlanCrossRef> {
         val crossRefs = mutableListOf<ExerciseTrainingsPlanCrossRef>()
-        for (tp in trainingsPlanExercises){
-            crossRefs.add(ExerciseTrainingsPlanCrossRef(tp.exerciseId, trainingsPlan.trainingsPlanId))
+        for (tp in trainingsPlanExercises) {
+            crossRefs.add(
+                ExerciseTrainingsPlanCrossRef(
+                    tp.exerciseId,
+                    trainingsPlan.trainingsPlanId
+                )
+            )
         }
         return crossRefs
     }
 
-    private fun getDisciplinesForTrainingsPlan(): List<Discipline> {
-        val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
+    private suspend fun getDisciplinesForTrainingsPlan(): List<Discipline> {
         val disciplines = mutableListOf<Discipline>()
         disciplines.add(disciplineRepo.getDisciplineByName(introDisciplineName))
         val allDisciplines = disciplineRepo.getAllDisciplines().toMutableList()
@@ -111,18 +117,14 @@ class TrainingsPlanGenerator(
         } else getRandomDisciplineFromList(disciplines)
     }
 
-    private fun getExercisesForDiscipline(
+    private suspend fun getExercisesForDiscipline(
         discipline: Discipline,
         duration: Float
     ): MutableList<Exercise> {
-        val exerciseRepo = ExerciseRepository(dataBase.exerciseDao())
-        val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
         var i = 0F
         val newExercises: MutableList<Exercise> = mutableListOf()
-        val allExercises: List<Exercise> =
-            exerciseRepo.getAllExercisesByDiscipline(disciplineRepo.getDisciplineByName("Hochsprung")) //should be discipline
+        val allExercises: List<Exercise> = exerciseRepo.getAllExercisesByDiscipline(discipline)
         while (i <= duration && newExercises.size < allExercises.size) { // ADD CHECK TO MAKE SURE IT STOPS WHEN THERE ARE NO MORE EXERCISES AVAILABLE
-            print("check")
             val newExercise: Exercise = getRandomFromList(allExercises)
             if (!checkForDuplicateExercise(newExercise, newExercises)) {
                 i += newExercise.duration

@@ -2,6 +2,7 @@ package de.hdmstuttgart.fitnessapp.database.daos
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.database.entities.relations.TrainingsPlanWithExercises
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,9 @@ interface TrainingsPlanDao {
 
     @Delete
     suspend fun deleteTrainingsPlan(trainingsPlan: TrainingsPlan)
+
+    @Query("SELECT * FROM TrainingsPlans WHERE TrainingsPlanId = :id")
+    suspend fun getTrainingsPlanById(id: Int): TrainingsPlan
 
     @Query("SELECT * FROM TrainingsPlans ORDER BY TrainingsPlanId ASC")
     fun getAllTrainingsPlans(): Flow<List<TrainingsPlan>>

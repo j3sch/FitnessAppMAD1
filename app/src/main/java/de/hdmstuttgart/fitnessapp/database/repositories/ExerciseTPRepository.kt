@@ -1,6 +1,7 @@
 package de.hdmstuttgart.fitnessapp.database.repositories;
 import de.hdmstuttgart.fitnessapp.database.daos.ExerciseTPDao;
 import de.hdmstuttgart.fitnessapp.database.entities.relations.ExerciseTrainingsPlanCrossRef
+import kotlinx.coroutines.flow.Flow
 
 class ExerciseTPRepository(private val crossRefDao: ExerciseTPDao) {
     suspend fun insertCrossRef(crossRef: ExerciseTrainingsPlanCrossRef) = crossRefDao.insertOrUpdateCrossRef(crossRef)
@@ -11,5 +12,5 @@ class ExerciseTPRepository(private val crossRefDao: ExerciseTPDao) {
 
     suspend fun deleteCrossRef(crossRef: ExerciseTrainingsPlanCrossRef) = crossRefDao.deleteCrossRef(crossRef)
 
-    fun getAllCrossRefs(): List<ExerciseTrainingsPlanCrossRef> = crossRefDao.getAllCrossRefs()
+    fun getAllCrossRefs(): Flow<List<ExerciseTrainingsPlanCrossRef>> = crossRefDao.getAllCrossRefs()
 }

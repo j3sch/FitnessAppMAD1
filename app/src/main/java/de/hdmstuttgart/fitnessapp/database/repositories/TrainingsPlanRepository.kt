@@ -1,6 +1,7 @@
 package de.hdmstuttgart.fitnessapp.database.repositories
 
 import de.hdmstuttgart.fitnessapp.database.daos.TrainingsPlanDao
+import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.database.entities.relations.TrainingsPlanWithExercises
@@ -14,8 +15,10 @@ class TrainingsPlanRepository (private val trainingsPlanDao: TrainingsPlanDao) {
 
     suspend fun deleteTrainingsPlan(trainingsPlan: TrainingsPlan) = trainingsPlanDao.deleteTrainingsPlan(trainingsPlan)
 
+    suspend fun getTrainingsPlanById(id: Int): TrainingsPlan = trainingsPlanDao.getTrainingsPlanById(id)
+
     fun getAllTrainingsPlans(): Flow<List<TrainingsPlan>> = trainingsPlanDao.getAllTrainingsPlans()
 
-    fun getExercisesForTrainingsPlan(trainingsPlan: TrainingsPlan): Flow<List<Exercise>> = trainingsPlanDao.getExercisesForTrainingsPlan(trainingsPlan.trainingsPlanId)
+    fun getExercisesForTrainingsPlan(trainingsPlan: TrainingsPlan): Flow<List<TrainingsPlanWithExercises>> = trainingsPlanDao.getExercisesForTrainingsPlan(trainingsPlan.trainingsPlanId)
 
 }

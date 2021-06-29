@@ -17,6 +17,7 @@ interface ExerciseTPDao {
     @Delete
     suspend fun deleteCrossRef(crossRef: ExerciseTrainingsPlanCrossRef)
 
+    @Transaction
     @Query("SELECT * FROM ExerciseTrainingsPlanCrossRef")
     fun getAllCrossRefs(): Flow<List<ExerciseTrainingsPlanCrossRef>>
 }
