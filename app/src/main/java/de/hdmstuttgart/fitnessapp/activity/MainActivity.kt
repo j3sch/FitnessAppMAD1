@@ -155,14 +155,4 @@ class MainActivity : AppCompatActivity(), Communicator {
             manager.createNotificationChannel(channel)
         }
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        val inflater: MenuInflater = menuInflater
-//        inflater.inflate(R.menu.menu_exit, menu)
-//        return true
-//    }
-//
-//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-//        return false
-//    }
 }

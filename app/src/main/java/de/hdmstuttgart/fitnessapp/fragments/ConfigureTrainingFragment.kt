@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asFlow
 import com.google.android.material.slider.RangeSlider
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.databinding.FragmentConfigureTrainingBinding
@@ -18,9 +17,6 @@ import kotlin.math.roundToInt
 class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_training) {
 
     var time: Float = 3.00f
-    private var firstSliderValue: Float = 25f
-    private var secondSliderValue: Float = 80f
-
 
     private lateinit var binding: FragmentConfigureTrainingBinding
     private lateinit var dataStoreViewModel: DataStoreViewModel
