@@ -6,7 +6,7 @@ import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import de.hdmstuttgart.fitnessapp.Communicator
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.adapter.History
 import de.hdmstuttgart.fitnessapp.adapter.HistoryAdapter

@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import de.hdmstuttgart.fitnessapp.Communicator
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
@@ -54,9 +54,7 @@ class MainActivity : AppCompatActivity(), Communicator {
                 R.id.home -> switchToHome()
                 R.id.configure -> switchToConfigureTraining()
                 R.id.history -> switchToHistory()
-                R.id.settings -> {
-                    Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
-                    }
+                R.id.settings -> switchToSettings()
             }
             true
         }
@@ -122,6 +120,15 @@ class MainActivity : AppCompatActivity(), Communicator {
             val historyFragment = HistoryFragment()
             replace(R.id.flFragment, historyFragment)
             addToBackStack("attachHistory")
+            commit()
+        }
+    }
+
+    override fun switchToSettings() {
+        supportFragmentManager.beginTransaction().apply {
+            val settingFragment = SettingFragment()
+            replace(R.id.flFragment, settingFragment)
+            addToBackStack("attachSettings")
             commit()
         }
     }

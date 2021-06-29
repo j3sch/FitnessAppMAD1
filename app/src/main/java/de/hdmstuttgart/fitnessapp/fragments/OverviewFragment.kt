@@ -6,7 +6,7 @@ import android.view.MenuInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import de.hdmstuttgart.fitnessapp.Communicator
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.adapter.Overview
 import de.hdmstuttgart.fitnessapp.adapter.OverviewAdapter
@@ -35,7 +35,6 @@ class OverviewFragment : Fragment(R.layout.fragment_overview), OverviewAdapter.O
             Overview("Liegestuetzen", "Aufwaehrmen", "5:00"),
             Overview("Liegestuetzen", "Aufwaehrmen", "5:00"),
             Overview("Liegestuetzen", "Aufwaehrmen", "5:00"),
-
         )
 
         val adapter = OverviewAdapter(overviewList, this)

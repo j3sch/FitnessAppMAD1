@@ -20,6 +20,7 @@ class DataStoreRepository(context: Context) {
         val trainingLength = preferencesKey<Float>("trainingLength")
         val firstSliderValue = preferencesKey<Float>("firstSliderValue")
         val secondSliderValue = preferencesKey<Float>("secondSliderValue")
+        val isNotificationEnabled = preferencesKey<Boolean>("isNotificationEnabled")
     }
 
     private val dataStore: DataStore<Preferences> = context.createDataStore(name = PREFERENCE_NAME)
@@ -34,6 +35,12 @@ class DataStoreRepository(context: Context) {
         dataStore.edit { preference ->
             preference[PreferenceKeys.firstSliderValue] = firstSliderValue
             preference[PreferenceKeys.secondSliderValue] = secondSliderValue
+        }
+    }
+
+    suspend fun saveNotificationEnabledStatus(isNotificationEnabled: Boolean) {
+        dataStore.edit { preference ->
+            preference[PreferenceKeys.isNotificationEnabled] = isNotificationEnabled
         }
     }
 
@@ -75,4 +82,17 @@ class DataStoreRepository(context: Context) {
             val value: Float = preference[PreferenceKeys.secondSliderValue] ?: 0F
             value
     }
+
+    val readIsNotificationEnabled: Flow<Boolean> = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                Log.d("DataStore", exception.message.toString())
+            } else {
+                throw exception
+            }
+        }
+        .map { preference ->
+            val value: Boolean = preference[PreferenceKeys.isNotificationEnabled] ?: true
+            value
+        }
 }

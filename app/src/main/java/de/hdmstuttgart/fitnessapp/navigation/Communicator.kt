@@ -1,4 +1,4 @@
-package de.hdmstuttgart.fitnessapp
+package de.hdmstuttgart.fitnessapp.navigation
 
 interface Communicator {
 
@@ -15,4 +15,6 @@ interface Communicator {
     fun switchToConfigureTraining()
 
     fun switchToExerciseDescription()
+
+    fun switchToSettings()
 }

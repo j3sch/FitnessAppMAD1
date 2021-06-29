@@ -17,11 +17,17 @@ class SettingsViewModel(application: Application): AndroidViewModel(application)
 
     val readSecondSliderValue = repository.readSecondSliderValue.asLiveData()
 
-    fun saveTrainingLength(value: Float) = viewModelScope.launch(Dispatchers.IO) {
-        repository.saveTrainingLength(value)
+    val readIsNotificationEnabled = repository.readIsNotificationEnabled.asLiveData()
+
+    fun saveTrainingLength(trainingLength: Float) = viewModelScope.launch(Dispatchers.IO) {
+        repository.saveTrainingLength(trainingLength)
     }
 
     fun saveSliderValues(firstSliderValue: Float, secondSliderValue: Float) = viewModelScope.launch(Dispatchers.IO) {
         repository.saveSliderValues(firstSliderValue, secondSliderValue)
+    }
+
+    fun saveIsNotificationEnabled(isNotificationEnabled: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repository.saveNotificationEnabledStatus(isNotificationEnabled)
     }
 }

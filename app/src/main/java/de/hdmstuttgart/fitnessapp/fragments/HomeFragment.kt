@@ -3,7 +3,7 @@ package de.hdmstuttgart.fitnessapp.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import de.hdmstuttgart.fitnessapp.Communicator
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 
