@@ -8,7 +8,7 @@ import de.hdmstuttgart.fitnessapp.database.entities.relations.TrainingsPlanWithE
 interface TrainingsPlanDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOrUpdateTrainingsPlan(trainingsPlan: TrainingsPlan)
+    suspend fun insertOrUpdateTrainingsPlan(trainingsPlan: TrainingsPlan): Long
 
     @Delete
     suspend fun deleteTrainingsPlan(trainingsPlan: TrainingsPlan)

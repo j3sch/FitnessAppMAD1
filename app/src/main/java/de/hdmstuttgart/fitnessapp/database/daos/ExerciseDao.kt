@@ -16,10 +16,10 @@ interface ExerciseDao {
     suspend fun deleteExercise(exercise: Exercise)
 
     @Query("SELECT * FROM Exercises ORDER BY ExerciseId ASC")
-    suspend fun getAllExercises(): List<Exercise>
+    fun getAllExercises(): List<Exercise>
 
     @Query("SELECT * FROM Exercises WHERE DisciplineId = :disciplineId")
-    suspend fun getAllExercisesByDiscipline(disciplineId: Int): List<Exercise>
+    fun getAllExercisesByDiscipline(disciplineId: Int): List<Exercise>
 
 
 }

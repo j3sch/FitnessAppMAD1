@@ -9,6 +9,7 @@ import de.hdmstuttgart.fitnessapp.database.TableData.populateDisciplineTable
 import de.hdmstuttgart.fitnessapp.database.TableData.populateExerciseTable
 import de.hdmstuttgart.fitnessapp.database.daos.DisciplineDao
 import de.hdmstuttgart.fitnessapp.database.daos.ExerciseDao
+import de.hdmstuttgart.fitnessapp.database.daos.ExerciseTPDao
 import de.hdmstuttgart.fitnessapp.database.daos.TrainingsPlanDao
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
@@ -29,6 +30,7 @@ abstract class DataBase : RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun disciplineDao(): DisciplineDao
     abstract fun trainingsPlanDao(): TrainingsPlanDao
+    abstract fun exerciseTPDao(): ExerciseTPDao
 
     private class DatabaseCallback(
         private val scope: CoroutineScope

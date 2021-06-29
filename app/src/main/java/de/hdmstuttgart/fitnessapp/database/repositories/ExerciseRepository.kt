@@ -6,7 +6,6 @@ import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 
 
 class ExerciseRepository (private val exerciseDao: ExerciseDao) {
-
     suspend fun insertExercise(exercise: Exercise) = exerciseDao.insertOrUpdateExercise(exercise)
 
     suspend fun insertListOfExercises(exerciseList: List<Exercise>) = exerciseDao.insertListOfExercises(exerciseList)
@@ -15,7 +14,7 @@ class ExerciseRepository (private val exerciseDao: ExerciseDao) {
 
     suspend fun deleteExercise(exercise: Exercise) = exerciseDao.deleteExercise(exercise)
 
-    suspend fun getAllExercises() = exerciseDao.getAllExercises()
+    fun getAllExercises(): List<Exercise> = exerciseDao.getAllExercises()
 
-    suspend fun getAllExercisesByDiscipline(discipline: Discipline): List<Exercise> = exerciseDao.getAllExercisesByDiscipline(discipline.disciplineId)
+    fun getAllExercisesByDiscipline(discipline: Discipline): List<Exercise> = exerciseDao.getAllExercisesByDiscipline(discipline.disciplineId)
 }

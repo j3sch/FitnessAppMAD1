@@ -10,16 +10,11 @@ import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class ExerciseViewModel(application: Application, scope: CoroutineScope) : ViewModel() {
-    private val repository: ExerciseRepository
+class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel() {
+
 
     var allExercises: List<Exercise> = emptyList()
     var allExercisesByDiscipline: List<Exercise> = emptyList()
-
-    init {
-        val exerciseDao = DataBase.getInstance(application, scope).exerciseDao()
-        repository = ExerciseRepository(exerciseDao)
-    }
 
     fun insertExercise(exercise: Exercise) = viewModelScope.launch {
         repository.insertExercise(exercise)

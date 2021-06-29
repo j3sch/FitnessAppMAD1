@@ -1,5 +1,6 @@
 package de.hdmstuttgart.fitnessapp.activity
 
+import TrainingsPlanGenerator
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -11,8 +12,11 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
+import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class MainActivity : AppCompatActivity(), Communicator {
 
@@ -25,6 +29,9 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val scope = CoroutineScope(SupervisorJob())
+        val dataBase = DataBase.getInstance(this, scope)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

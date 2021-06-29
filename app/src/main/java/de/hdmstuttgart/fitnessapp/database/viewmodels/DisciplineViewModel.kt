@@ -1,8 +1,7 @@
 package de.hdmstuttgart.fitnessapp.database.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
@@ -10,16 +9,8 @@ import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class DisciplineViewModel(application: Application, scope: CoroutineScope) : ViewModel() {
-    private val repository: DisciplineRepository
-
-    var allDisciplines : List<Discipline> = emptyList()
-    var allExercisesForDiscipline : List<Exercise> = emptyList()
-
-    init {
-        val disciplineDao = DataBase.getInstance(application, scope).disciplineDao()
-        repository = DisciplineRepository(disciplineDao)
-    }
+class DisciplineViewModel(private val repository: DisciplineRepository) : ViewModel() {
+    var allExercisesForDiscipline: List<Exercise> = emptyList()
 
     fun insertDiscipline(discipline: Discipline) = viewModelScope.launch {
         repository.insertDiscipline(discipline)
@@ -37,8 +28,12 @@ class DisciplineViewModel(application: Application, scope: CoroutineScope) : Vie
         repository.deleteDiscipline(discipline)
     }
 
-    fun getAllDisciplines() = viewModelScope.launch {
-        allDisciplines = repository.getAllDisciplines()
+    fun getAllDisciplines(): List<Discipline> {
+        return repository.getAllDisciplines()
+    }
+
+    fun getAllDisciplines(name: String): Discipline {
+        return repository.getDisciplineByName(name)
     }
 
     fun getExercisesForDiscipline(discipline: Discipline) = viewModelScope.launch {

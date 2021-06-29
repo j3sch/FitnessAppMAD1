@@ -48,9 +48,8 @@ object TableData {
         Discipline(6, "Speer"),
         Discipline(7, "Diskus"),
         Discipline(8, "Kraft"),
-        Discipline(9, "Hochsprung"),
-        Discipline(10, "Einleitung"),
-        Discipline(11, "Schluss")
+        Discipline(9, "Einleitung"),
+        Discipline(10, "Schluss")
     )
 
     fun populateExerciseTable(): List<Exercise> {

@@ -1,5 +1,6 @@
 package de.hdmstuttgart.fitnessapp.fragments
 
+import TrainingsPlanGenerator
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -12,11 +13,14 @@ import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity
 import de.hdmstuttgart.fitnessapp.database.DataBase
+import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
+import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import kotlinx.coroutines.*
 
@@ -49,18 +53,15 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         setHasOptionsMenu(true)
         startCountdown(60000, 10)
 
-        val database =  DataBase.getInstance(requireContext(), scope)
+        val database = DataBase.getInstance(requireContext(), scope)
         exerciseRepo = ExerciseRepository(database.exerciseDao())
 
-        scope.launch(Dispatchers.IO) {
-            try {
-                currentExerciseName = exerciseRepo.getAllExercises()[0].name
-                withContext(Dispatchers.Main) {
-                    binding.tvExercise.text = currentExerciseName
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+        val generator = TrainingsPlanGenerator(requireContext(), scope)
+        val disciplineRepo = DisciplineRepository(database.disciplineDao())
+        val disciplineViewModel = DisciplineViewModel(disciplineRepo)
+
+        scope.launch() {
+            generator.createTrainingsPlan("newPlan22", 120, 0.15F, 0.70F, 0.15F)
         }
 
         binding.btnStartStop.setOnClickListener {
@@ -136,6 +137,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
                     }
                 }
             }
+
             override fun onFinish() {
                 notificationManager.notify(NOTIFICATION_ID, notification)
                 binding.tvCountdown.text = "done!"
@@ -146,7 +148,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private suspend fun nextButton() {
         isPaused = true
         delay(100)
-        withContext (Dispatchers.Main) {
+        withContext(Dispatchers.Main) {
             binding.tvExercise.text = exerciseRepo.getAllExercises()[1].name
             isPaused = false
             startCountdown(60000, 10)
@@ -156,7 +158,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private suspend fun currentButton() {
         isPaused = true
         delay(100)
-        withContext (Dispatchers.Main) {
+        withContext(Dispatchers.Main) {
             isPaused = false
             startCountdown(60000, 10)
         }
@@ -165,7 +167,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     private suspend fun lastButton() {
         isPaused = true
         delay(100)
-        withContext (Dispatchers.Main) {
+        withContext(Dispatchers.Main) {
             isPaused = false
             startCountdown(60000, 10)
         }
