@@ -1,6 +1,6 @@
 package de.hdmstuttgart.fitnessapp.fragments
 
-import TrainingsPlanGenerator
+import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -13,7 +13,6 @@ import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import de.hdmstuttgart.fitnessapp.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity

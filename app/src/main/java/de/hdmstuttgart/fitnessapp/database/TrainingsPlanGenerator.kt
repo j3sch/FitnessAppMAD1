@@ -1,12 +1,7 @@
-import android.app.Application
+package de.hdmstuttgart.fitnessapp.database
+
 import android.content.Context
-import android.os.Debug
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import de.hdmstuttgart.fitnessapp.database.DataBase
+
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
@@ -15,29 +10,24 @@ import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseTPRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
-import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
-import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
 import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
-import de.hdmstuttgart.fitnessapp.datastore.DataStoreViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TrainingsPlanGenerator(
     val context: Context,
     val scope: CoroutineScope
-    ) : AppCompatActivity() {
+    ) {
+
     companion object {
         const val introDisciplineName = "Einleitung"
         const val outroDisciplineName = "Schluss"
         const val datePattern = "dd.MM.yyyy"
     }
 
-
     val dataBase = DataBase.getInstance(context, scope)
     var exercisesForTrainingsPlan: ArrayList<Exercise> = arrayListOf()
-    private lateinit var dataStoreViewModel: DataStoreViewModel
 
     fun createTrainingsPlan(
         name: String,
@@ -52,12 +42,6 @@ class TrainingsPlanGenerator(
         val trainingsPlanViewModel = TrainingsPlanViewModel(trainingsPlanRepo)
         val trainingsPlan = TrainingsPlan(name, date)
         trainingsPlanViewModel.insertTrainingsPlan(trainingsPlan)
-
-        dataStoreViewModel = ViewModelProvider(this).get(DataStoreViewModel::class.java)
-
-        dataStoreViewModel.readTrainingLength.observe(this, { trainingLength ->
-            println(String.format("%.2f", trainingLength))
-        })
 
         val durationIntro = maximumTime * paramIntro
         val durationMain = (maximumTime * paramMain) / 2

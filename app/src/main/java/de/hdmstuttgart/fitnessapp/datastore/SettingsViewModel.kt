@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DataStoreViewModel(application: Application): AndroidViewModel(application) {
+class SettingsViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository = DataStoreRepository(application)
 
@@ -16,7 +16,6 @@ class DataStoreViewModel(application: Application): AndroidViewModel(application
     val readFirstSliderValue = repository.readFirstSliderValue.asLiveData()
 
     val readSecondSliderValue = repository.readSecondSliderValue.asLiveData()
-
 
     fun saveTrainingLength(value: Float) = viewModelScope.launch(Dispatchers.IO) {
         repository.saveTrainingLength(value)

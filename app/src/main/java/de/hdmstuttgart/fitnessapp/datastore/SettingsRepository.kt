@@ -37,7 +37,6 @@ class DataStoreRepository(context: Context) {
         }
     }
 
-
     val readTrainingLength: Flow<Float> = dataStore.data
         .catch { exception ->
             if (exception is IOException) {
