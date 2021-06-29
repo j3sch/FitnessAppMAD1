@@ -1,6 +1,5 @@
 package de.hdmstuttgart.fitnessapp.activity
 
-import TrainingsPlanGenerator
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -10,7 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import de.hdmstuttgart.fitnessapp.Communicator
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
@@ -55,9 +54,7 @@ class MainActivity : AppCompatActivity(), Communicator {
                 R.id.home -> switchToHome()
                 R.id.configure -> switchToConfigureTraining()
                 R.id.history -> switchToHistory()
-                R.id.settings -> {
-                    Toast.makeText(applicationContext, "Clicked Settings", Toast.LENGTH_SHORT).show()
-                    }
+                R.id.settings -> switchToSettings()
             }
             true
         }
@@ -127,6 +124,15 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
+    override fun switchToSettings() {
+        supportFragmentManager.beginTransaction().apply {
+            val settingFragment = SettingFragment()
+            replace(R.id.flFragment, settingFragment)
+            addToBackStack("attachSettings")
+            commit()
+        }
+    }
+
     override fun switchToFinish() {
         supportFragmentManager.beginTransaction().apply {
             val finishFragment = FinishFragment()
@@ -155,14 +161,4 @@ class MainActivity : AppCompatActivity(), Communicator {
             manager.createNotificationChannel(channel)
         }
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        val inflater: MenuInflater = menuInflater
-//        inflater.inflate(R.menu.menu_exit, menu)
-//        return true
-//    }
-//
-//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-//        return false
-//    }
 }

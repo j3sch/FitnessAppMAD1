@@ -1,6 +1,6 @@
 package de.hdmstuttgart.fitnessapp.fragments
 
-import TrainingsPlanGenerator
+import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -13,8 +13,8 @@ import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import de.hdmstuttgart.fitnessapp.Communicator
+import androidx.fragment.app.viewModels
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity
 import de.hdmstuttgart.fitnessapp.database.DataBase
@@ -22,6 +22,7 @@ import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
 import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
+import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
 
 class CountdownFragment : Fragment(R.layout.fragment_countdown) {
@@ -60,9 +61,9 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         val disciplineRepo = DisciplineRepository(database.disciplineDao())
         val disciplineViewModel = DisciplineViewModel(disciplineRepo)
 
-        scope.launch() {
-            generator.createTrainingsPlan("newPlan22", 120, 0.15F, 0.70F, 0.15F)
-        }
+//        scope.launch() {
+//            generator.createTrainingsPlan("newPlan22", 120, 0.15F, 0.70F, 0.15F)
+//        }
 
         binding.btnStartStop.setOnClickListener {
             if (!isPaused) {
@@ -139,8 +140,13 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
             }
 
             override fun onFinish() {
-                notificationManager.notify(NOTIFICATION_ID, notification)
-                binding.tvCountdown.text = "done!"
+                val settingsViewModel by viewModels<SettingsViewModel>()
+                settingsViewModel.readIsNotificationEnabled.observe(viewLifecycleOwner, { isNotificationEnabled ->
+                    if (isNotificationEnabled) {
+                        notificationManager.notify(NOTIFICATION_ID, notification)
+                    }
+                })
+                binding.tvCountdown.text = getString(R.string.done)
             }
         }.start()
     }
@@ -149,7 +155,7 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(100)
         withContext(Dispatchers.Main) {
-            binding.tvExercise.text = exerciseRepo.getAllExercises()[1].name
+//            binding.tvExercise.text = exerciseRepo.getAllExercises()[1].name
             isPaused = false
             startCountdown(60000, 10)
         }

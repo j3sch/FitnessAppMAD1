@@ -6,39 +6,33 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asFlow
+import androidx.fragment.app.viewModels
 import com.google.android.material.slider.RangeSlider
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.databinding.FragmentConfigureTrainingBinding
-import de.hdmstuttgart.fitnessapp.datastore.DataStoreViewModel
+import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlin.math.round
 import kotlin.math.roundToInt
 
 class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_training) {
 
-    var time: Float = 3.00f
-    private var firstSliderValue: Float = 25f
-    private var secondSliderValue: Float = 80f
-
-
+    var time: Float = 3.00F
     private lateinit var binding: FragmentConfigureTrainingBinding
-    private lateinit var dataStoreViewModel: DataStoreViewModel
-
+    val settingsViewModel by viewModels<SettingsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
         binding = FragmentConfigureTrainingBinding.bind(view)
-        dataStoreViewModel = ViewModelProvider(this).get(DataStoreViewModel::class.java)
 
         setHasOptionsMenu(true)
 
-        dataStoreViewModel.readTrainingLength.observe(viewLifecycleOwner, { trainingLength ->
+        settingsViewModel.readTrainingLength.observe(viewLifecycleOwner, { trainingLength ->
+            time = trainingLength
             binding.tvTrainingTime.text = String.format("%.2f", trainingLength)
         })
 
-        dataStoreViewModel.readFirstSliderValue.observe(viewLifecycleOwner, { value1 ->
-            dataStoreViewModel.readSecondSliderValue.observe(viewLifecycleOwner, { value2 ->
+        settingsViewModel.readFirstSliderValue.observe(viewLifecycleOwner, { value1 ->
+            settingsViewModel.readSecondSliderValue.observe(viewLifecycleOwner, { value2 ->
                 binding.rangeSlider.values = mutableListOf(value1, value2)
                 binding.tvWarmUp.text = getString(R.string.warm_up, value1.roundToInt().toString() + "%")
                 binding.tvMainPart.text = getString(R.string.main_part, ( value2 -  value1).roundToInt().toString() + "%")
@@ -55,7 +49,7 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
 
                 override fun onStopTrackingTouch(slider: RangeSlider) {
                     val values = binding.rangeSlider.values
-                    dataStoreViewModel.saveSliderValues(values[0], values[1])
+                    settingsViewModel.saveSliderValues(values[0], values[1])
                     Log.d("onStopTrackingTouch From", values[0].toString())
                     Log.d("onStopTrackingTouch T0", values[1].toString())
                 }
@@ -70,7 +64,7 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
                     time - 0.15f;
                 }
                 time = round(newTime * 100) / 100f
-                dataStoreViewModel.saveTrainingLength(time)
+                settingsViewModel.saveTrainingLength(time)
             }
         }
 
@@ -84,7 +78,7 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
                     time + 0.15f;
                 }
                 time = round(newTime * 100) / 100f
-                dataStoreViewModel.saveTrainingLength(time)
+                settingsViewModel.saveTrainingLength(time)
             }
         }
     }

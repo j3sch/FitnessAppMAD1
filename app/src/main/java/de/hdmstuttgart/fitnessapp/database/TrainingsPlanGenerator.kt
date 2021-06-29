@@ -1,9 +1,7 @@
-import android.app.Application
+package de.hdmstuttgart.fitnessapp.database
+
 import android.content.Context
-import android.os.Debug
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import de.hdmstuttgart.fitnessapp.database.DataBase
+
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
@@ -12,18 +10,16 @@ import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseTPRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
-import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
-import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
 import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class TrainingsPlanGenerator(
     val context: Context,
     val scope: CoroutineScope
-) {
+    ) {
+
     companion object {
         const val introDisciplineName = "Einleitung"
         const val outroDisciplineName = "Schluss"
@@ -46,7 +42,6 @@ class TrainingsPlanGenerator(
         val trainingsPlanViewModel = TrainingsPlanViewModel(trainingsPlanRepo)
         val trainingsPlan = TrainingsPlan(name, date)
         trainingsPlanViewModel.insertTrainingsPlan(trainingsPlan)
-
 
         val durationIntro = maximumTime * paramIntro
         val durationMain = (maximumTime * paramMain) / 2

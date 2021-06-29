@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DataStoreViewModel(application: Application): AndroidViewModel(application) {
+class SettingsViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository = DataStoreRepository(application)
 
@@ -17,12 +17,17 @@ class DataStoreViewModel(application: Application): AndroidViewModel(application
 
     val readSecondSliderValue = repository.readSecondSliderValue.asLiveData()
 
+    val readIsNotificationEnabled = repository.readIsNotificationEnabled.asLiveData()
 
-    fun saveTrainingLength(value: Float) = viewModelScope.launch(Dispatchers.IO) {
-        repository.saveTrainingLength(value)
+    fun saveTrainingLength(trainingLength: Float) = viewModelScope.launch(Dispatchers.IO) {
+        repository.saveTrainingLength(trainingLength)
     }
 
     fun saveSliderValues(firstSliderValue: Float, secondSliderValue: Float) = viewModelScope.launch(Dispatchers.IO) {
         repository.saveSliderValues(firstSliderValue, secondSliderValue)
+    }
+
+    fun saveIsNotificationEnabled(isNotificationEnabled: Boolean) = viewModelScope.launch(Dispatchers.IO) {
+        repository.saveNotificationEnabledStatus(isNotificationEnabled)
     }
 }
