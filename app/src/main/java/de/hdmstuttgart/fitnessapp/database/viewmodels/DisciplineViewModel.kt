@@ -1,16 +1,12 @@
 package de.hdmstuttgart.fitnessapp.database.viewmodels
 
-import android.app.Application
 import androidx.lifecycle.*
-import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class DisciplineViewModel(private val repository: DisciplineRepository) : ViewModel() {
-    var allExercisesForDiscipline: List<Exercise> = emptyList()
 
     fun insertDiscipline(discipline: Discipline) = viewModelScope.launch {
         repository.insertDiscipline(discipline)
@@ -28,15 +24,27 @@ class DisciplineViewModel(private val repository: DisciplineRepository) : ViewMo
         repository.deleteDiscipline(discipline)
     }
 
-    fun getAllDisciplines(): List<Discipline> {
-        return repository.getAllDisciplines()
+    fun getAllDisciplines(): LiveData<List<Discipline>> {
+        val result = MutableLiveData<List<Discipline>>()
+        viewModelScope.launch {
+            result.postValue(repository.getAllDisciplines())
+        }
+        return result
     }
 
-    fun getAllDisciplines(name: String): Discipline {
-        return repository.getDisciplineByName(name)
+    fun getDisciplineByName(name: String): LiveData<Discipline> {
+        val result = MutableLiveData<Discipline>()
+        viewModelScope.launch {
+            result.postValue(repository.getDisciplineByName(name))
+        }
+        return result
     }
 
-    fun getExercisesForDiscipline(discipline: Discipline) = viewModelScope.launch {
-        allExercisesForDiscipline = repository.getExercisesForDiscipline(discipline)
+    fun getExercisesForDiscipline(discipline: Discipline): LiveData<List<Exercise>> {
+        val result = MutableLiveData<List<Exercise>>()
+        viewModelScope.launch {
+            result.postValue(repository.getExercisesForDiscipline(discipline))
+        }
+        return result
     }
 }

@@ -1,6 +1,8 @@
 package de.hdmstuttgart.fitnessapp.database.viewmodels
 
 import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.hdmstuttgart.fitnessapp.database.DataBase
@@ -11,11 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel() {
-
-
-    var allExercises: List<Exercise> = emptyList()
-    var allExercisesByDiscipline: List<Exercise> = emptyList()
-
     fun insertExercise(exercise: Exercise) = viewModelScope.launch {
         repository.insertExercise(exercise)
     }
@@ -32,11 +29,19 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         repository.deleteExercise(exercise)
     }
 
-    fun getAllExercises() = viewModelScope.launch {
-        allExercises = repository.getAllExercises()
+    fun getAllExercises(): LiveData<List<Exercise>> {
+        val result = MutableLiveData<List<Exercise>>()
+        viewModelScope.launch {
+            result.postValue(repository.getAllExercises())
+        }
+        return result
     }
 
-    fun getAllExercisesByDiscipline(discipline: Discipline) = viewModelScope.launch {
-        allExercisesByDiscipline = repository.getAllExercisesByDiscipline(discipline)
+    fun getAllExercisesByDiscipline(discipline: Discipline) : LiveData<List<Exercise>> {
+        val result = MutableLiveData<List<Exercise>>()
+        viewModelScope.launch {
+            result.postValue(repository.getAllExercisesByDiscipline(discipline))
+        }
+        return result
     }
 }

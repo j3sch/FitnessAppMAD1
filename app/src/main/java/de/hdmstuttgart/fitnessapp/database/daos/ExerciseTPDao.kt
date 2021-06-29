@@ -1,8 +1,10 @@
 package de.hdmstuttgart.fitnessapp.database.daos
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.relations.ExerciseTrainingsPlanCrossRef
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExerciseTPDao {
@@ -16,5 +18,5 @@ interface ExerciseTPDao {
     suspend fun deleteCrossRef(crossRef: ExerciseTrainingsPlanCrossRef)
 
     @Query("SELECT * FROM ExerciseTrainingsPlanCrossRef")
-    fun getAllCrossRefs(): List<ExerciseTrainingsPlanCrossRef>
+    fun getAllCrossRefs(): Flow<List<ExerciseTrainingsPlanCrossRef>>
 }

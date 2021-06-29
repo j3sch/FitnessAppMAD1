@@ -92,7 +92,7 @@ class TrainingsPlanGenerator(
         for (tp in trainingsPlanExercises){
             crossRefs.add(ExerciseTrainingsPlanCrossRef(tp.exerciseId, trainingsPlan.trainingsPlanId))
         }
-        return  crossRefs
+        return crossRefs
     }
 
     private fun getDisciplinesForTrainingsPlan(): List<Discipline> {
