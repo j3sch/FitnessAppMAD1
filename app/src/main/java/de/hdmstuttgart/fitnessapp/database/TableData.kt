@@ -223,9 +223,9 @@ object TableData {
         Exercise(
             122,
             "Nachzieh-Anlauf",
-            "",
+            "Die Athleten stellen sich am Rand des Ringes auf, mit Blickrichtung weg vom Feld. Bei Rechtshändern steht er auf dem rechten Fuß und der linke ist nur ganz leicht auf den Boden aufgesetzt. Als nächstes wird dieser linke Fuß schnell nach hinten über den Boden gezogen und der andere Fuß rückt ebenfalls etwas hinterher. Zum Schluss muss nach eine schnelle Drehung erfolgen. Diese findet von unten nach oben statt. Wichtig ist ,dass die Athleten die Kugel lange am Hals behalten um sie nicht zu werfen.",
             "- eine Kugel pro Athlet",
-            "",
+            "Die Athleten sollen sich am Rand des Ringes mit ihrer Kugel aufstellen.",
             "in kleine Gruppen einteilen á 2-3 Personen",
             25,
             4
@@ -253,7 +253,7 @@ object TableData {
         Exercise(
             125,
             "Linien-Sprünge",
-            "",
+            "Die Athleten stellen sich neben einer Linie auf. Die Grundbewegung ist immer dieselbe. Die Athleten sollen immer mit dem jeweils von der Linie wegstehenden Bein über Kreuz über die Linie springen und bei jedem dritten Sprung mit beiden Beinen springen und landen. Zusätzlich können dann später noch die Arme mit Bewegungen eingebunden werden.",
             "",
             "Hierfür ist kein Aufbau nötig. Nur genug Linien und Platz für jeden Athleten.",
             "aufgeteilt auf die vorhandenen Lienen in kleinere Gruppen ",
@@ -293,7 +293,7 @@ object TableData {
         Exercise(
             129,
             "Wurf mit drei Schritten",
-            "",
+            "Die Athleten nehmen den Speer lang mit dem Arm nach hinten und berühren mit der Spitze beinahe ihre Nase. Der Anlauf soll aus drei Schritten bestehen und somit aus dem bekannten Am-ster-dam takt. Sprich es sind ein etwas langsamer Schritt und dann zwei schnelle Schritte zum Abwurf hin. Auch hier soll beim Abwurf die \"C\" ähnliche Haltung vorhanden sein. Sowie eine schöne Drehung von den Füßen her über die Hüfte bis hin zur Schulter. Auch der Wurf soll zum Schluss mit einem langen Arm stattfinden.",
             "- ein Speer für jeden Athleten",
             "Ein Speer für jeden und dann mit etwas Abstand zum Rand am Feld, mit ebenfalls genug Abstand zu den Nebenleuten aufstellen. ",
             "- Die Athleten alle zusammen in einer Reihe  ",
@@ -343,7 +343,7 @@ object TableData {
         Exercise(
             134,
             "Rumpf",
-            "",
+            "Die Athleten sollen auf dem Boden verschiedene Trainingsmethoden für die Bauchmuskeln machen. Zum Beispiel das Rudern im Sitzen mit den Beinen in der Luft oder auch nur das einfache sitzen auf dem Boden und anheben und gestreckt halten der Beine in der Luft.",
             "- keine Utensilien nötig",
             "Die Athleten sollten sich am Rand eines Feldes aufstellen oder zumiondest so das man sie am besten im Blick behalten kann",
             "-Athleten stellen sich an einer Linie auf",
