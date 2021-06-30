@@ -21,7 +21,6 @@ import de.hdmstuttgart.fitnessapp.databinding.FragmentOverviewBinding
 import kotlinx.coroutines.*
 
 class OverviewFragment(
-    private val generator: TrainingsPlanGenerator,
     private val trainingsPlan: TrainingsPlan
 ) : Fragment(R.layout.fragment_overview), OverviewAdapter.OnItemClickListener {
 
@@ -42,7 +41,7 @@ class OverviewFragment(
 
         val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
 
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             exerciseList.clear()
             exerciseList.addAll(trainingsPlanViewModel.getExercisesForTrainingsPlanId(trainingsPlan.trainingsPlanId))
         }

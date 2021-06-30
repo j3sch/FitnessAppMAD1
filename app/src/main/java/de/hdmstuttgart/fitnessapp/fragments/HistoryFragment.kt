@@ -31,17 +31,10 @@ class HistoryFragment : Fragment(R.layout.fragment_history), HistoryAdapter.OnIt
         setHasOptionsMenu(true)
         communicator = activity as Communicator
 
-//        val historyList = mutableListOf(
-//            History("10.06.2021", ),
-//            History("12.06.2021"),
-//            )
-
-
         val dataBase = DataBase.getInstance(requireContext(), scope)
         val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
         trainingsPlanViewModel.getAllTrainingsPlans().observe(viewLifecycleOwner, { trainingPlanList ->
             this.trainingPlanList = trainingPlanList
-            println(trainingPlanList)
             val adapter = HistoryAdapter(trainingPlanList, this)
             binding.rvHistory.adapter = adapter
         })

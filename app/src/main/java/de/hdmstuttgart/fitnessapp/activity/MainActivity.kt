@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), Communicator {
     override fun switchToCountdown(trainingsPlan: TrainingsPlan) {
 
         supportFragmentManager.beginTransaction().apply {
-            val countdownFragment = CountdownFragment(generator, trainingsPlan)
+            val countdownFragment = CountdownFragment(trainingsPlan)
             replace(R.id.flFragment, countdownFragment)
             addToBackStack("attachCountDown")
             commit()
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity(), Communicator {
     override fun switchToOverview(trainingsPlan: TrainingsPlan) {
         currentTrainingPlan = trainingsPlan
         supportFragmentManager.beginTransaction().apply {
-            val overviewFragment = OverviewFragment(generator, trainingsPlan)
+            val overviewFragment = OverviewFragment(trainingsPlan)
             replace(R.id.flFragment, overviewFragment)
             addToBackStack("attachOverview")
             commit()

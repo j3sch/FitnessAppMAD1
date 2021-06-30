@@ -1,6 +1,5 @@
 package de.hdmstuttgart.fitnessapp.fragments
 
-import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -28,7 +27,6 @@ import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
 
 class CountdownFragment(
-    private val generator: TrainingsPlanGenerator,
     private val trainingPlan: TrainingsPlan
     ) : Fragment(R.layout.fragment_countdown) {
     companion object {
@@ -45,7 +43,7 @@ class CountdownFragment(
     lateinit var notification: Notification
     lateinit var notificationManager: NotificationManagerCompat
 
-    private val numberExercises = generator.exercisesForTrainingsPlan.size
+    private var numberExercises = 0
     private var currentExercise = 0
     private val exerciseList: ArrayList<Exercise> = arrayListOf()
 
@@ -57,13 +55,10 @@ class CountdownFragment(
         val dataBase = DataBase.getInstance(requireContext(), scope)
 
         val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
-//        trainingsPlanViewModel.getExercisesForTrainingsPlanId(generator.getNewTrainingsPlan().trainingsPlanId).observe(viewLifecycleOwner,
-//            { exercises ->
-//                for (exercise in exercises)
-//                    exerciseList.add(exercise)
-//            })
+
         scope.launch {
             exerciseList.addAll(trainingsPlanViewModel.getExercisesForTrainingsPlanId(trainingPlan.trainingsPlanId))
+            numberExercises = exerciseList.size
         }
         setHasOptionsMenu(true)
         Thread.sleep(100)

@@ -14,7 +14,7 @@ import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlin.math.round
 import kotlin.math.roundToInt
 
-class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_training) {
+class ConfigureTrainingFragment : Fragment(R.layout.fragment_configure_training) {
 
     var time: Float = 3.00F
     private lateinit var binding: FragmentConfigureTrainingBinding
@@ -56,12 +56,12 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
             })
 
         binding.btnMinus.setOnClickListener {
-            val newTime: Float;
+            val newTime: Float
             if (time > 1) {
                 newTime = if (time % 1f == 0f) {
-                    time - 0.55f;
+                    time - 0.55f
                 } else {
-                    time - 0.15f;
+                    time - 0.15f
                 }
                 time = round(newTime * 100) / 100f
                 settingsViewModel.saveTrainingLength(time)
@@ -73,9 +73,9 @@ class ConfigureTrainingFragment() : Fragment(R.layout.fragment_configure_trainin
             if (time < 5) {
                 newTime = if (time.toString().length == 4
                     && time.toString().substring(2, 4) == "45") {
-                    time + 0.55f;
+                    time + 0.55f
                 } else {
-                    time + 0.15f;
+                    time + 0.15f
                 }
                 time = round(newTime * 100) / 100f
                 settingsViewModel.saveTrainingLength(time)
