@@ -3,6 +3,7 @@ package de.hdmstuttgart.fitnessapp.database.daos
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
+import de.hdmstuttgart.fitnessapp.database.entities.relations.DisciplineWithExercises
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,8 +21,9 @@ interface ExerciseDao {
     @Query("SELECT * FROM Exercises ORDER BY ExerciseId ASC")
     suspend fun getAllExercises(): List<Exercise>
 
+    @Transaction
     @Query("SELECT * FROM Exercises WHERE DisciplineId = :disciplineId")
-    suspend fun getAllExercisesByDiscipline(disciplineId: Int): List<Exercise>
+    suspend fun getAllExercisesByDiscipline(disciplineId: Int): List<DisciplineWithExercises>
 
 
 }
