@@ -4,12 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import de.hdmstuttgart.fitnessapp.R
+import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.databinding.ItemOverviewBinding
 
 class OverviewAdapter(
     private var overview: ArrayList<Exercise>,
-    private val listener: OnItemClickListener
+    private val listener: OnItemClickListener,
+    private val disciplineList: List<Discipline>
 ) : RecyclerView.Adapter<OverviewAdapter.OverviewViewHolder>() {
 
     private lateinit var binding: ItemOverviewBinding
@@ -38,11 +41,11 @@ class OverviewAdapter(
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
         holder.itemView.apply {
             binding.tvOverviewTitle.text = overview[position].name
-            binding.tvOverviewDisciplines.text = overview[position].disciplineId.toString()
-            binding.tvOverviewTime.text = overview[position].duration.toString()
+            binding.tvOverviewDisciplines.text = disciplineList[overview[position].disciplineId - 1].name
+            binding.tvOverviewTime.text = resources.getString(R.string.overviewDuration, overview[position].duration.toString())
         }
     }
-    
+
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }

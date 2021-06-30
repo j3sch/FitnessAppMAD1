@@ -78,10 +78,6 @@ class TrainingsPlanGenerator(
         //fillExerciseTrainingsPlanCrossRef(trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt()), exercisesForTrainingsPlan)
     }
 
-    suspend fun getExercisesForTrainingsPlan(): ArrayList<Exercise> {
-        return exercisesForTrainingsPlan;
-    }
-
     private fun fillExerciseTrainingsPlanCrossRef(
         trainingsPlan: TrainingsPlan,
         trainingsPlanExercises: List<Exercise>

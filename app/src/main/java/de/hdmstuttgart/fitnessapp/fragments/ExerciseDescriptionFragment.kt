@@ -9,27 +9,31 @@ import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
+import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentExerciseDescriptionBinding
 import kotlinx.coroutines.*
 
-class ExerciseDescriptionFragment(private val exercise: Exercise) : Fragment(R.layout.fragment_exercise_description) {
+class ExerciseDescriptionFragment(
+    private val exercise: Exercise,
+    private val TO_SCREEN: String
+    ) : Fragment(R.layout.fragment_exercise_description) {
     private lateinit var communicator: Communicator
     private lateinit var binding: FragmentExerciseDescriptionBinding
-    private lateinit var list: List<Discipline>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentExerciseDescriptionBinding.bind(view)
+
         val scope = CoroutineScope(SupervisorJob())
         val database = DataBase.getInstance(requireContext(), scope)
-        val disciplineRepo = DisciplineRepository(database.disciplineDao())
+        val disciplineViewModel = DisciplineViewModel(DisciplineRepository(database.disciplineDao()))
+        lateinit var disciplineList: List<Discipline>
 
-        scope.launch {
-            list = disciplineRepo.getAllDisciplines()
-            withContext(Dispatchers.Main) {
-                binding.tvDisciplineContent.text = list[exercise.disciplineId - 1].name
-            }
-        }
+        disciplineViewModel.getAllDisciplines().observe(viewLifecycleOwner, { disciplines ->
+            disciplineList = disciplines
+            binding.tvDisciplineContent.text = disciplineList[exercise.disciplineId - 1].name
+        })
+
         (exercise.disciplineId.toString())
         setHasOptionsMenu(true)
         communicator = activity as Communicator
@@ -43,6 +47,10 @@ class ExerciseDescriptionFragment(private val exercise: Exercise) : Fragment(R.l
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.to_overview, menu)
+        if (TO_SCREEN == "overview") {
+            inflater.inflate(R.menu.to_overview, menu)
+        } else {
+        inflater.inflate(R.menu.to_countdown, menu)
+        }
     }
 }

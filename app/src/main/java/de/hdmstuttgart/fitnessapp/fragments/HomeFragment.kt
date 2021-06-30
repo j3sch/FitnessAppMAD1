@@ -50,6 +50,7 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
                 println(paramIntro)
                 println(paramMain)
                 println(paramOutro)
+                generator.exercisesForTrainingsPlan.clear()
                 generator.createTrainingsPlan("newPlan$counter", length, paramIntro, paramMain, paramOutro)
             }
             communicator.switchToOverview()

@@ -22,10 +22,12 @@ import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
 
-class CountdownFragment(private val generator: TrainingsPlanGenerator) : Fragment(R.layout.fragment_countdown) {
+
+class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.fragment_countdown) {
     companion object {
         const val CHANNEL_ID = "channelID"
         const val NOTIFICATION_ID = 0
+        const val TO_SCREEN = "countdown"
     }
 
     private lateinit var binding: FragmentCountdownBinding
@@ -66,7 +68,7 @@ class CountdownFragment(private val generator: TrainingsPlanGenerator) : Fragmen
 
         binding.tvExercise.setOnClickListener {
             val communicator = activity as Communicator
-            communicator.switchToExerciseDescription(exerciseList[currentExercise])
+            communicator.switchToExerciseDescription(exerciseList[currentExercise], TO_SCREEN)
         }
 
         binding.tvLast.setOnClickListener {

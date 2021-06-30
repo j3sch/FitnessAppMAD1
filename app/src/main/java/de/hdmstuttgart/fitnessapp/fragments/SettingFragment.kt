@@ -23,9 +23,9 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         setHasOptionsMenu(true)
         communicator = activity as Communicator
 
-    binding.chipNotification.setOnClickListener {
-        val settingsViewModel by viewModels<SettingsViewModel>()
-        settingsViewModel.saveIsNotificationEnabled(binding.chipNotification.isChecked)
+        binding.chipNotification.setOnClickListener {
+            val settingsViewModel by viewModels<SettingsViewModel>()
+            settingsViewModel.saveIsNotificationEnabled(binding.chipNotification.isChecked)
         }
     }
 

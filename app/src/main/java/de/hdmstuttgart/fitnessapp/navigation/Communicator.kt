@@ -16,7 +16,7 @@ interface Communicator {
 
     fun switchToConfigureTraining()
 
-    fun switchToExerciseDescription(exercise: Exercise)
+    fun switchToExerciseDescription(exercise: Exercise, TO_SCREEN: String)
 
     fun switchToSettings()
 }

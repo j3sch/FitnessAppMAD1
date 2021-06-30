@@ -16,14 +16,19 @@ import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), Communicator {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val CHANNEL_ID = "channelID"
-    private val CHANNEL_NAME = "channelName"
+    companion object {
+        private const val CHANNEL_ID = "channelID"
+        private const val CHANNEL_NAME = "channelName"
+    }
+
     val scope = CoroutineScope(SupervisorJob())
     private lateinit var generator: TrainingsPlanGenerator
 
@@ -74,6 +79,10 @@ class MainActivity : AppCompatActivity(), Communicator {
             }
             item.itemId == R.id.to_overview -> {
                 switchToOverview()
+                true
+            }
+            item.itemId == R.id.to_countdown -> {
+                switchToCountdown()
                 true
             }
             else -> {
@@ -145,9 +154,9 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    override fun switchToExerciseDescription(exercise: Exercise) {
+    override fun switchToExerciseDescription(exercise: Exercise, TO_SCREEN: String) {
         supportFragmentManager.beginTransaction().apply {
-            val exerciseDescription = ExerciseDescriptionFragment(exercise)
+            val exerciseDescription = ExerciseDescriptionFragment(exercise, TO_SCREEN)
             replace(R.id.flFragment, exerciseDescription)
             addToBackStack("attachExerciseDescription")
             commit()
