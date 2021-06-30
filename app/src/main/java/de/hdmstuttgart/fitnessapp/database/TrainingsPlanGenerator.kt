@@ -128,22 +128,28 @@ class TrainingsPlanGenerator(
     ): MutableList<Exercise> {
         val pauseExercise: Exercise = exerciseRepo.getExerciseById(100)
         var currentDuration = 0F
+        val durationThreshold = 1.1F * maxDuration
         val newExercises: MutableList<Exercise> = mutableListOf()
         val allExercises = exerciseRepo.getAllExercisesByDiscipline(discipline).toMutableList()
-        while (currentDuration <= maxDuration && allExercises.size > 0) {
+        while (currentDuration < maxDuration && allExercises.size > 0) {
             val newExercise: Exercise = getRandomFromList(allExercises)
-            if (!checkForDuplicateExercise(newExercise, newExercises) && newExercise.name != pauseExercise.name) {
-                if(currentDuration + newExercise.duration > maxDuration){
+            if (!checkForDuplicateExercise(newExercise, newExercises) ) {
+                println(newExercise.name)
+                if(currentDuration + newExercise.duration > durationThreshold){
                     allExercises.remove(newExercise)
-                    continue
+                    if(allExercises.size > 0) {
+                        continue
+                    } else {
+                        break
+                    }
                 } else {
-                    currentDuration += newExercise.duration + pauseExercise.duration
+                    allExercises.remove(newExercise)
+                    currentDuration += newExercise.duration
                     newExercises.add(newExercise)
-                    newExercises.add(pauseExercise)
-                    println("Duration: $currentDuration")
                 }
             }
         }
+        println("MaxDuration: $maxDuration CurrentDuration: $currentDuration")
         return newExercises
     }
 
