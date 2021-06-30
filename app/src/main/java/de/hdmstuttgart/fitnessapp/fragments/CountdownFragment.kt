@@ -65,6 +65,8 @@ class CountdownFragment(private val generator: TrainingsPlanGenerator) : Fragmen
         }
 
         binding.tvExercise.setOnClickListener {
+            val communicator = activity as Communicator
+            communicator.switchToExerciseDescription(exerciseList[currentExercise])
         }
 
         binding.tvLast.setOnClickListener {
