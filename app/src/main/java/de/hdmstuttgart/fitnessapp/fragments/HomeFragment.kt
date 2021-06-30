@@ -14,7 +14,6 @@ import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
-import java.time.LocalDateTime
 
 class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.layout.fragment_home) {
 
@@ -54,7 +53,7 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
                 var trainingPlan = TrainingsPlan(0, "", "")
                 try {
                      trainingPlan = generator.createTrainingsPlan(
-                        LocalDateTime.now().toString(),
+                        "neuer Trainingsplan",
                         length,
                         paramIntro,
                         paramMain,
@@ -65,7 +64,7 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
                     e.printStackTrace()
 //                    trainingsPlanViewModel.deleteTrainingsPlan(trainingPlan)
                     val replaceTrainingPlan = generator.createTrainingsPlan(
-                            LocalDateTime.now().toString(),
+                            "neuer Trainingsplan",
                             length,
                             paramIntro,
                             paramMain,

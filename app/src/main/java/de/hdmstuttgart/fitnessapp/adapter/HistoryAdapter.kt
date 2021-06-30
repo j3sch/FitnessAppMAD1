@@ -38,7 +38,7 @@ class HistoryAdapter(
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.itemView.apply {
-            binding.tvHistoryTitle.text = histories[position].name
+            binding.tvHistoryTitle.text = histories[position].date
         }
     }
 
