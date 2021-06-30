@@ -29,9 +29,9 @@ class TrainingsPlanGenerator(
     var exercisesForTrainingsPlan: ArrayList<Exercise> = arrayListOf()
 
     //Repos and ViewModels
-    val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
-    val exerciseRepo = ExerciseRepository(dataBase.exerciseDao())
-    val trainingsPlanRepo = TrainingsPlanRepository(dataBase.trainingsPlanDao())
+    private val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
+    private val exerciseRepo = ExerciseRepository(dataBase.exerciseDao())
+    private val trainingsPlanRepo = TrainingsPlanRepository(dataBase.trainingsPlanDao())
     val exerciseTPRepo = ExerciseTPRepository(dataBase.exerciseTPDao())
 
     suspend fun createTrainingsPlan(
@@ -96,6 +96,7 @@ class TrainingsPlanGenerator(
 
     private suspend fun getDisciplinesForTrainingsPlan(): List<Discipline> {
         val disciplines = mutableListOf<Discipline>()
+        disciplines.add(disciplineRepo.getDisciplineByName(introDisciplineName))
         disciplines.add(disciplineRepo.getDisciplineByName(introDisciplineName))
         val allDisciplines = disciplineRepo.getAllDisciplines().toMutableList()
         val firstDiscipline = getRandomDisciplineFromList(allDisciplines)

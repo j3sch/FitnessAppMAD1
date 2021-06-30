@@ -5,7 +5,7 @@ import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 
 object TableData {
 
-    val listOfExercises = listOf<Exercise>(
+    private val listOfExercises = listOf(
         Exercise(
             101,
             "Achter-Lauf",
@@ -472,7 +472,7 @@ object TableData {
         ),
     )
 
-    private var listOfDisciplines = listOf<Discipline>(
+    private var listOfDisciplines = listOf(
         Discipline(1, "Hochsprung"),
         Discipline(2, "Weitsprung"),
         Discipline(3, "Sprint"),

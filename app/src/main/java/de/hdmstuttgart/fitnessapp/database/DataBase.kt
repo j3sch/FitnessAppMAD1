@@ -38,7 +38,6 @@ abstract class DataBase : RoomDatabase() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-
             instance?.let { database ->
                 scope.launch {
                     val exerciseDao = database.exerciseDao()

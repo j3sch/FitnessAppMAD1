@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), Communicator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         generator = TrainingsPlanGenerator(this, scope)
-        val dataBase = DataBase.getInstance(this, scope)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

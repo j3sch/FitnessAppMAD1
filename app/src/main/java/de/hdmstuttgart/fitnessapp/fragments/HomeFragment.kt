@@ -9,9 +9,7 @@ import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.layout.fragment_home) {
 
@@ -47,9 +45,27 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
             val communicator = activity as Communicator
             scope.launch() {
                 generator.exercisesForTrainingsPlan.clear()
-                generator.createTrainingsPlan("newPlan$counter", length, paramIntro, paramMain, paramOutro)
+                try {
+                    generator.createTrainingsPlan(
+                        "newPlan$counter",
+                        length,
+                        paramIntro,
+                        paramMain,
+                        paramOutro
+                    )
+                    communicator.switchToOverview()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    generator.createTrainingsPlan(
+                            "newPlan$counter",
+                            length,
+                            paramIntro,
+                            paramMain,
+                            paramOutro
+                    )
+                    communicator.switchToOverview()
+                }
             }
-            communicator.switchToOverview()
         }
     }
 }
