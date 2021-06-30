@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
+import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
+import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
+import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
+import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
@@ -20,8 +24,11 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
         val scope = CoroutineScope(SupervisorJob())
+        val dataBase = DataBase.getInstance(requireContext(), scope)
+
         val settingsViewModel by viewModels<SettingsViewModel>()
-        
+        val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
+
         var length = 0
         var paramIntro = 0F
         var paramMain = 0F
@@ -44,8 +51,9 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
             val communicator = activity as Communicator
             scope.launch(Dispatchers.IO) {
                 generator.exercisesForTrainingsPlan.clear()
+                var trainingPlan = TrainingsPlan(0, "", "")
                 try {
-                    val trainingPlan = generator.createTrainingsPlan(
+                     trainingPlan = generator.createTrainingsPlan(
                         LocalDateTime.now().toString(),
                         length,
                         paramIntro,
@@ -55,14 +63,15 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
                     communicator.switchToOverview(trainingPlan)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    val trainingPlan = generator.createTrainingsPlan(
+//                    trainingsPlanViewModel.deleteTrainingsPlan(trainingPlan)
+                    val replaceTrainingPlan = generator.createTrainingsPlan(
                             LocalDateTime.now().toString(),
                             length,
                             paramIntro,
                             paramMain,
                             paramOutro
                     )
-                    communicator.switchToOverview(trainingPlan)
+                    communicator.switchToOverview(replaceTrainingPlan)
                 }
             }
         }
