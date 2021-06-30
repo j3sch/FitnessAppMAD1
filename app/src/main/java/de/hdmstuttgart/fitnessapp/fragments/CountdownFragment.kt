@@ -27,7 +27,6 @@ class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.f
     companion object {
         const val CHANNEL_ID = "channelID"
         const val NOTIFICATION_ID = 0
-        const val TO_SCREEN = "countdown"
     }
 
     private lateinit var binding: FragmentCountdownBinding
@@ -68,7 +67,7 @@ class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.f
 
         binding.tvExercise.setOnClickListener {
             val communicator = activity as Communicator
-            communicator.switchToExerciseDescription(exerciseList[currentExercise], TO_SCREEN)
+            communicator.switchToExerciseDescription(exerciseList[currentExercise])
         }
 
         binding.tvLast.setOnClickListener {

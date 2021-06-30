@@ -4,21 +4,20 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import de.hdmstuttgart.fitnessapp.navigation.Communicator
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
+import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), Communicator {
 
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity(), Communicator {
                 true
             }
             item.itemId == R.id.to_overview -> {
-                switchToOverview()
+                onBackPressed()
                 true
             }
             item.itemId == R.id.to_countdown -> {
@@ -154,9 +153,9 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    override fun switchToExerciseDescription(exercise: Exercise, TO_SCREEN: String) {
+    override fun switchToExerciseDescription(exercise: Exercise) {
         supportFragmentManager.beginTransaction().apply {
-            val exerciseDescription = ExerciseDescriptionFragment(exercise, TO_SCREEN)
+            val exerciseDescription = ExerciseDescriptionFragment(exercise)
             replace(R.id.flFragment, exerciseDescription)
             addToBackStack("attachExerciseDescription")
             commit()

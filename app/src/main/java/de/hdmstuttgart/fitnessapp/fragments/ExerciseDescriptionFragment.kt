@@ -15,7 +15,6 @@ import kotlinx.coroutines.*
 
 class ExerciseDescriptionFragment(
     private val exercise: Exercise,
-    private val TO_SCREEN: String
     ) : Fragment(R.layout.fragment_exercise_description) {
     private lateinit var communicator: Communicator
     private lateinit var binding: FragmentExerciseDescriptionBinding
@@ -47,7 +46,10 @@ class ExerciseDescriptionFragment(
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        if (TO_SCREEN == "overview") {
+        val index = parentFragmentManager.backStackEntryCount - 2
+        val lastFragmentName = parentFragmentManager.getBackStackEntryAt(index).name
+        println(lastFragmentName)
+        if (lastFragmentName == "attachOverview") {
             inflater.inflate(R.menu.to_overview, menu)
         } else {
         inflater.inflate(R.menu.to_countdown, menu)

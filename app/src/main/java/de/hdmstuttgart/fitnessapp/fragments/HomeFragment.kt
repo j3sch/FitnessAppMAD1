@@ -46,10 +46,6 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
             counter++
             val communicator = activity as Communicator
             scope.launch() {
-                println(length)
-                println(paramIntro)
-                println(paramMain)
-                println(paramOutro)
                 generator.exercisesForTrainingsPlan.clear()
                 generator.createTrainingsPlan("newPlan$counter", length, paramIntro, paramMain, paramOutro)
             }

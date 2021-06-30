@@ -19,11 +19,6 @@ import kotlinx.coroutines.*
 
 class OverviewFragment(private val generator: TrainingsPlanGenerator) : Fragment(R.layout.fragment_overview), OverviewAdapter.OnItemClickListener {
 
-    companion object {
-        const val TO_SCREEN = "overview"
-    }
-
-
     private lateinit var communicator: Communicator
     private lateinit var binding: FragmentOverviewBinding
 
@@ -57,6 +52,6 @@ class OverviewFragment(private val generator: TrainingsPlanGenerator) : Fragment
 
     override fun onItemClick(position: Int) {
         val exercise = generator.exercisesForTrainingsPlan[position]
-        communicator.switchToExerciseDescription(exercise, TO_SCREEN)
+        communicator.switchToExerciseDescription(exercise)
     }
 }
