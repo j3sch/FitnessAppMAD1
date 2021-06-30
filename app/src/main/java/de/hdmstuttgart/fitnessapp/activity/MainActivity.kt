@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity(), Communicator {
                 switchToCountdown(currentTrainingPlan)
                 true
             }
+            item.itemId == R.id.to_history -> {
+                switchToHistory()
+                true
+            }
             else -> {
                 super.onOptionsItemSelected(item)
             }

@@ -48,7 +48,6 @@ class ExerciseDescriptionFragment(
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val index = parentFragmentManager.backStackEntryCount - 2
         val lastFragmentName = parentFragmentManager.getBackStackEntryAt(index).name
-        println(lastFragmentName)
         if (lastFragmentName == "attachOverview") {
             inflater.inflate(R.menu.to_overview, menu)
         } else {

@@ -10,11 +10,12 @@ import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
+import java.time.LocalDateTime
+import java.util.*
 
 class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.layout.fragment_home) {
 
     private lateinit var binding: FragmentHomeBinding
-    private var counter = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,13 +42,12 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
         })
 
         binding.btnGenerate.setOnClickListener {
-            counter++
             val communicator = activity as Communicator
             scope.launch() {
                 generator.exercisesForTrainingsPlan.clear()
                 try {
                     val trainingsplan = generator.createTrainingsPlan(
-                        "newPlan$counter",
+                        LocalDateTime.now().toString(),
                         length,
                         paramIntro,
                         paramMain,
@@ -57,7 +57,7 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
                 } catch (e: Exception) {
                     e.printStackTrace()
                     val trainingsplan = generator.createTrainingsPlan(
-                            "newPlan$counter",
+                            LocalDateTime.now().toString(),
                             length,
                             paramIntro,
                             paramMain,

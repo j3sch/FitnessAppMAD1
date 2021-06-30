@@ -182,7 +182,7 @@ object TableData {
         ),
         Exercise(
             117,
-            "",
+            "Hüft-Wurf",
             "Die Athleten stellen sich am Rand zum Feld auf mit Blickrichtung zum Feld hin. Die Athleten nehmen die Kugel in beide Hände und gehen damit ein wenig in die Knie, der Rücken soll gerade sein.Aus dieser Position heraus nehmen sie Schwung um die Kugel nach vorne hinweg in das Feld werfen. Wichtig ist das die Athleten die Bewegung mit dem ganzen Körper mitmachen und im besten Fall mit der Kugel mit einen kleinen Sprung in die selbe Richtung mitgehen.",
             "- eine Kugel pro Athlet",
             "Die Athleten sollen sich an der Feld aufstellen mit ihrer Kugel",

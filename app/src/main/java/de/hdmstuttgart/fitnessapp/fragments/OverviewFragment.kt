@@ -60,7 +60,14 @@ class OverviewFragment(
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.to_home, menu)
+
+        val index = parentFragmentManager.backStackEntryCount - 2
+        val lastFragmentName = parentFragmentManager.getBackStackEntryAt(index).name
+        if (lastFragmentName == "attachHome") {
+            inflater.inflate(R.menu.to_home, menu)
+        } else {
+            inflater.inflate(R.menu.to_history, menu)
+        }
     }
 
     override fun onItemClick(position: Int) {
