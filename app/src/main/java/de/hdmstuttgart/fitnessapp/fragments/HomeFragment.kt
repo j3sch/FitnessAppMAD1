@@ -10,11 +10,11 @@ import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import de.hdmstuttgart.fitnessapp.databinding.FragmentHomeBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
+import java.time.LocalDateTime
 
 class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.layout.fragment_home) {
 
     private lateinit var binding: FragmentHomeBinding
-    private var counter = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,30 +41,29 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
         })
 
         binding.btnGenerate.setOnClickListener {
-            counter++
             val communicator = activity as Communicator
-            scope.launch() {
+            scope.launch(Dispatchers.IO) {
                 generator.exercisesForTrainingsPlan.clear()
                 try {
-                    generator.createTrainingsPlan(
-                        "newPlan$counter",
+                    val trainingPlan = generator.createTrainingsPlan(
+                        LocalDateTime.now().toString(),
                         length,
                         paramIntro,
                         paramMain,
                         paramOutro
                     )
-                    communicator.switchToOverview()
+                    communicator.switchToOverview(trainingPlan)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    generator.createTrainingsPlan(
-                            "newPlan$counter",
+                    val trainingPlan = generator.createTrainingsPlan(
+                            LocalDateTime.now().toString(),
                             length,
                             paramIntro,
                             paramMain,
                             paramOutro
                     )
+                    communicator.switchToOverview(trainingPlan)
                 }
-                communicator.switchToOverview()
             }
         }
     }

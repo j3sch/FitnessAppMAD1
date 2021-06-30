@@ -27,6 +27,7 @@ class TrainingsPlanGenerator(
 
     val dataBase = DataBase.getInstance(context, scope)
     var exercisesForTrainingsPlan: ArrayList<Exercise> = arrayListOf()
+    private lateinit var newTrainingsPlan: TrainingsPlan
 
     //Repos and ViewModels
     private val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
@@ -40,12 +41,12 @@ class TrainingsPlanGenerator(
         paramIntro: Float,
         paramMain: Float,
         paramOutro: Float
-    ) {
+    ): TrainingsPlan {
         val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern(datePattern))
 
         val trainingsPlan = TrainingsPlan(name, date)
         val newTrainingsPlanId = trainingsPlanRepo.insertTrainingsPlan(trainingsPlan)
-        val newTrainingsPlan = trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt())
+        newTrainingsPlan = trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt())
 
         val durationIntro = maximumTime * paramIntro
         val durationMain = (maximumTime * paramMain) / 2
@@ -77,6 +78,12 @@ class TrainingsPlanGenerator(
             }
         }
         exerciseTPRepo.insertListOfCrossRef(getExerciseTrainingsPlanCrossRefs(newTrainingsPlan, exercisesForTrainingsPlan))
+
+        return newTrainingsPlan
+    }
+
+    fun getNewTrainingsPlan(): TrainingsPlan {
+        return newTrainingsPlan
     }
 
     private fun getExerciseTrainingsPlanCrossRefs(

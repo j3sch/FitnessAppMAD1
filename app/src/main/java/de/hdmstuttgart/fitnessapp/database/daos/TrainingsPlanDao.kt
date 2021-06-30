@@ -1,8 +1,6 @@
 package de.hdmstuttgart.fitnessapp.database.daos
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import de.hdmstuttgart.fitnessapp.database.entities.Discipline
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.database.entities.relations.TrainingsPlanWithExercises
 import kotlinx.coroutines.flow.Flow
@@ -24,5 +22,5 @@ interface TrainingsPlanDao {
 
     @Transaction
     @Query("SELECT * FROM TrainingsPlans WHERE TrainingsPlanId = :trainingsPlanId")
-    suspend fun getExercisesForTrainingsPlanId(trainingsPlanId: Int) : TrainingsPlanWithExercises
+    fun getExercisesForTrainingsPlanId(trainingsPlanId: Int) : TrainingsPlanWithExercises
 }

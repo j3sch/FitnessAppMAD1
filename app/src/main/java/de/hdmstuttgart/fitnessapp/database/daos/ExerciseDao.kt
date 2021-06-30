@@ -27,4 +27,9 @@ interface ExerciseDao {
     @Transaction
     @Query("SELECT * FROM Exercises WHERE DisciplineId = :disciplineId")
     suspend fun getAllExercisesByDiscipline(disciplineId: Int): DisciplineWithExercises
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> f604f76d8caa420a8fc0a332df682c4b758b9f2c
 }

@@ -1,6 +1,5 @@
 package de.hdmstuttgart.fitnessapp.fragments
 
-import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import android.app.Notification
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
@@ -18,12 +17,18 @@ import androidx.fragment.app.viewModels
 import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity
+import de.hdmstuttgart.fitnessapp.database.DataBase
+import de.hdmstuttgart.fitnessapp.database.entities.Exercise
+import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
+import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
+import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
 
-
-class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.fragment_countdown) {
+class CountdownFragment(
+    private val trainingPlan: TrainingsPlan
+    ) : Fragment(R.layout.fragment_countdown) {
     companion object {
         const val CHANNEL_ID = "channelID"
         const val NOTIFICATION_ID = 0
@@ -38,17 +43,25 @@ class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.f
     lateinit var notification: Notification
     lateinit var notificationManager: NotificationManagerCompat
 
-    private val numberExercises = generator.exercisesForTrainingsPlan.size
+    private var numberExercises = 0
     private var currentExercise = 0
-    private var exerciseList = generator.exercisesForTrainingsPlan
+    private val exerciseList: ArrayList<Exercise> = arrayListOf()
 
     private var currentExerciseName = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCountdownBinding.bind(view)
+        val dataBase = DataBase.getInstance(requireContext(), scope)
 
+        val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
+
+        scope.launch {
+            exerciseList.addAll(trainingsPlanViewModel.getExercisesForTrainingsPlanId(trainingPlan.trainingsPlanId))
+            numberExercises = exerciseList.size
+        }
         setHasOptionsMenu(true)
+        Thread.sleep(100)
         println(exerciseList[currentExercise].duration)
         startCountdown(exerciseList[currentExercise].duration.toLong() * 60000, 10)
         binding.pbCountdown.max = exerciseList[currentExercise].duration * 6000
@@ -79,7 +92,6 @@ class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.f
             } else {
                 Toast.makeText(requireContext(), "Bereits bei der ersten Übung", Toast.LENGTH_LONG).show()
             }
-
         }
 
         binding.tvNext.setOnClickListener {
