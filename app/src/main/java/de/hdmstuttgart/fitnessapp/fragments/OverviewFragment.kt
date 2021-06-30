@@ -38,7 +38,6 @@ class OverviewFragment(
         communicator = activity as Communicator
 
         val disciplineViewModel = DisciplineViewModel(DisciplineRepository(dataBase.disciplineDao()))
-
         val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
 
         scope.launch(Dispatchers.IO) {
@@ -49,7 +48,6 @@ class OverviewFragment(
         disciplineViewModel.getAllDisciplines().observe(viewLifecycleOwner, { disciplines ->
             val adapter = OverviewAdapter(exerciseList, this, disciplines)
             binding.rvOverview.adapter = adapter
-            adapter.notifyDataSetChanged()
         })
         binding.rvOverview.layoutManager = LinearLayoutManager(requireContext())
 

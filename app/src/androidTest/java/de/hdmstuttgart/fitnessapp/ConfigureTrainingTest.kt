@@ -1,7 +1,6 @@
 package de.hdmstuttgart.fitnessapp
 
 import android.view.Gravity
-import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -15,7 +14,6 @@ import de.hdmstuttgart.fitnessapp.activity.MainActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest

@@ -14,25 +14,25 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-class CountdownFragmentTest : TestCase() {
-
-    @get:Rule
-    val activityRule = ActivityScenarioRule(MainActivity::class.java)
-
-    @Before
-    fun setup() {
-       launchFragmentInContainer<CountdownFragment>()
-    }
-
-    @Test
-    fun testTvCurrent() {
-        onView(withId(R.id.tvCurrent))
-            .check(matches(isDisplayed()))
-            .check(matches(withText("Current")))
-
-        activityRule.scenario.close()
-    }
+//@RunWith(AndroidJUnit4::class)
+//class CountdownFragmentTest : TestCase() {
+//
+//    @get:Rule
+//    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+//
+//    @Before
+//    fun setup() {
+//       launchFragmentInContainer<CountdownFragment>()
+//    }
+//
+//    @Test
+//    fun testTvCurrent() {
+//        onView(withId(R.id.tvCurrent))
+//            .check(matches(isDisplayed()))
+//            .check(matches(withText("Current")))
+//
+//        activityRule.scenario.close()
+//    }
 //
 //    @Test
 //    fun countdownStartTest() {
@@ -66,4 +66,4 @@ class CountdownFragmentTest : TestCase() {
 //        onView(withId(R.id.tvCountdown))
 //            .check(matches(withText("59")))
 //    }
-}
+//}
