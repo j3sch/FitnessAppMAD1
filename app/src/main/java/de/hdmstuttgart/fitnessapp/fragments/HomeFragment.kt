@@ -46,25 +46,25 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
             scope.launch() {
                 generator.exercisesForTrainingsPlan.clear()
                 try {
-                    generator.createTrainingsPlan(
+                    val trainingsplan = generator.createTrainingsPlan(
                         "newPlan$counter",
                         length,
                         paramIntro,
                         paramMain,
                         paramOutro
                     )
-                    communicator.switchToOverview()
+                    communicator.switchToOverview(trainingsplan)
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    generator.createTrainingsPlan(
+                    val trainingsplan = generator.createTrainingsPlan(
                             "newPlan$counter",
                             length,
                             paramIntro,
                             paramMain,
                             paramOutro
                     )
+                    communicator.switchToOverview(trainingsplan)
                 }
-                communicator.switchToOverview()
             }
         }
     }

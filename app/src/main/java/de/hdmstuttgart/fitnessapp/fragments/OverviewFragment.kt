@@ -11,16 +11,23 @@ import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.adapter.OverviewAdapter
 import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
-import de.hdmstuttgart.fitnessapp.database.entities.Discipline
+import de.hdmstuttgart.fitnessapp.database.entities.Exercise
+import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
+import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
 import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
+import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentOverviewBinding
 import kotlinx.coroutines.*
 
-class OverviewFragment(private val generator: TrainingsPlanGenerator) : Fragment(R.layout.fragment_overview), OverviewAdapter.OnItemClickListener {
+class OverviewFragment(
+    private val generator: TrainingsPlanGenerator,
+    private val trainingsPlan: TrainingsPlan
+) : Fragment(R.layout.fragment_overview), OverviewAdapter.OnItemClickListener {
 
     private lateinit var communicator: Communicator
     private lateinit var binding: FragmentOverviewBinding
+    private val exerciseList: ArrayList<Exercise> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,19 +37,25 @@ class OverviewFragment(private val generator: TrainingsPlanGenerator) : Fragment
 
         setHasOptionsMenu(true)
         communicator = activity as Communicator
-        Thread.sleep(100)
 
         val disciplineViewModel = DisciplineViewModel(DisciplineRepository(dataBase.disciplineDao()))
 
+        val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
+
+        scope.launch {
+            exerciseList.clear()
+            exerciseList.addAll(trainingsPlanViewModel.getExercisesForTrainingsPlanId(trainingsPlan.trainingsPlanId))
+        }
+
         disciplineViewModel.getAllDisciplines().observe(viewLifecycleOwner, { disciplines ->
-            val adapter = OverviewAdapter(generator.exercisesForTrainingsPlan, this, disciplines)
+            val adapter = OverviewAdapter(exerciseList, this, disciplines)
             binding.rvOverview.adapter = adapter
             adapter.notifyDataSetChanged()
         })
         binding.rvOverview.layoutManager = LinearLayoutManager(requireContext())
 
         binding.btnStartTraining.setOnClickListener {
-            communicator.switchToCountdown()
+            communicator.switchToCountdown(trainingsPlan)
         }
     }
 
@@ -51,7 +64,7 @@ class OverviewFragment(private val generator: TrainingsPlanGenerator) : Fragment
     }
 
     override fun onItemClick(position: Int) {
-        val exercise = generator.exercisesForTrainingsPlan[position]
+        val exercise = exerciseList[position]
         communicator.switchToExerciseDescription(exercise)
     }
 }

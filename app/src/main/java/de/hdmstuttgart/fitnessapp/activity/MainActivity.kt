@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import de.hdmstuttgart.fitnessapp.R
-import de.hdmstuttgart.fitnessapp.database.DataBase
 import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
+import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
 import de.hdmstuttgart.fitnessapp.navigation.Communicator
@@ -30,6 +29,7 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     val scope = CoroutineScope(SupervisorJob())
     private lateinit var generator: TrainingsPlanGenerator
+    private lateinit var currentTrainingPlan: TrainingsPlan;
 
     lateinit var toggle: ActionBarDrawerToggle
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity(), Communicator {
         switchToHome()
 
         when (intent.getIntExtra("exercise", 0)) {
-            5 -> switchToCountdown()
+            5 -> switchToCountdown(currentTrainingPlan)
             8 -> switchToFinish()
         }
 
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), Communicator {
                 true
             }
             item.itemId == R.id.to_countdown -> {
-                switchToCountdown()
+                switchToCountdown(currentTrainingPlan)
                 true
             }
             else -> {
@@ -89,9 +89,10 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    override fun switchToCountdown() {
+    override fun switchToCountdown(trainingsPlan: TrainingsPlan) {
+
         supportFragmentManager.beginTransaction().apply {
-            val countdownFragment = CountdownFragment(generator)
+            val countdownFragment = CountdownFragment(generator, trainingsPlan)
             replace(R.id.flFragment, countdownFragment)
             addToBackStack("attachCountDown")
             commit()
@@ -116,9 +117,10 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    override fun switchToOverview() {
+    override fun switchToOverview(trainingsPlan: TrainingsPlan) {
+        currentTrainingPlan = trainingsPlan
         supportFragmentManager.beginTransaction().apply {
-            val overviewFragment = OverviewFragment(generator)
+            val overviewFragment = OverviewFragment(generator, trainingsPlan)
             replace(R.id.flFragment, overviewFragment)
             addToBackStack("attachOverview")
             commit()

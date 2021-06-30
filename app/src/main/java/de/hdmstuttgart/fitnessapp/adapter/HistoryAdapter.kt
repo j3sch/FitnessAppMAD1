@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.databinding.ItemHistoryBinding
 import de.hdmstuttgart.fitnessapp.fragments.HistoryFragment
 
 class HistoryAdapter(
-    private var histories: List<History>,
+    private var histories: List<TrainingsPlan>,
     private val listener: HistoryFragment,
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
@@ -37,7 +38,7 @@ class HistoryAdapter(
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.itemView.apply {
-            binding.tvHistoryTitle.text = histories[position].title
+            binding.tvHistoryTitle.text = histories[position].name
         }
     }
 
