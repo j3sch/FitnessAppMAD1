@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.databinding.ItemOverviewBinding
 
 class OverviewAdapter(
-    private var overview: List<Overview>,
+    private var overview: ArrayList<Exercise>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<OverviewAdapter.OverviewViewHolder>() {
 
@@ -36,9 +37,9 @@ class OverviewAdapter(
 
     override fun onBindViewHolder(holder: OverviewViewHolder, position: Int) {
         holder.itemView.apply {
-            binding.tvOverviewTitle.text = overview[position].title
-            binding.tvOverviewDisciplines.text = overview[position].disciplines
-            binding.tvOverviewTime.text = overview[position].time
+            binding.tvOverviewTitle.text = overview[position].name
+            binding.tvOverviewDisciplines.text = overview[position].disciplineId.toString()
+            binding.tvOverviewTime.text = overview[position].duration.toString()
         }
     }
     

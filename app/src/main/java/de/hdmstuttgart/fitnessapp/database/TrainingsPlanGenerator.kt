@@ -10,9 +10,6 @@ import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseTPRepository
 import de.hdmstuttgart.fitnessapp.database.repositories.TrainingsPlanRepository
-import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
-import de.hdmstuttgart.fitnessapp.database.viewmodels.ExerciseViewModel
-import de.hdmstuttgart.fitnessapp.database.viewmodels.TrainingsPlanViewModel
 import kotlinx.coroutines.CoroutineScope
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -79,6 +76,10 @@ class TrainingsPlanGenerator(
             }
         }
         //fillExerciseTrainingsPlanCrossRef(trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt()), exercisesForTrainingsPlan)
+    }
+
+    suspend fun getExercisesForTrainingsPlan(): ArrayList<Exercise> {
+        return exercisesForTrainingsPlan;
     }
 
     private fun fillExerciseTrainingsPlanCrossRef(

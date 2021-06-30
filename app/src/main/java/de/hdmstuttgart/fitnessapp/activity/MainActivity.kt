@@ -7,11 +7,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.database.DataBase
+import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
+import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.databinding.ActivityMainBinding
 import de.hdmstuttgart.fitnessapp.fragments.*
 import kotlinx.coroutines.CoroutineScope
@@ -23,12 +24,14 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     private val CHANNEL_ID = "channelID"
     private val CHANNEL_NAME = "channelName"
+    val scope = CoroutineScope(SupervisorJob())
+    private lateinit var generator: TrainingsPlanGenerator
 
     lateinit var toggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val scope = CoroutineScope(SupervisorJob())
+        generator = TrainingsPlanGenerator(this, scope)
         val dataBase = DataBase.getInstance(this, scope)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -81,7 +84,7 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     override fun switchToCountdown() {
         supportFragmentManager.beginTransaction().apply {
-            val countdownFragment = CountdownFragment()
+            val countdownFragment = CountdownFragment(generator)
             replace(R.id.flFragment, countdownFragment)
             addToBackStack("attachCountDown")
             commit()
@@ -90,7 +93,7 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     override fun switchToHome() {
         supportFragmentManager.beginTransaction().apply {
-            val homeFragment = HomeFragment()
+            val homeFragment = HomeFragment(generator)
             replace(R.id.flFragment, homeFragment)
             addToBackStack("attachHome")
             commit()
@@ -108,7 +111,7 @@ class MainActivity : AppCompatActivity(), Communicator {
 
     override fun switchToOverview() {
         supportFragmentManager.beginTransaction().apply {
-            val overviewFragment = OverviewFragment()
+            val overviewFragment = OverviewFragment(generator)
             replace(R.id.flFragment, overviewFragment)
             addToBackStack("attachOverview")
             commit()
@@ -142,9 +145,9 @@ class MainActivity : AppCompatActivity(), Communicator {
         }
     }
 
-    override fun switchToExerciseDescription() {
+    override fun switchToExerciseDescription(exercise: Exercise) {
         supportFragmentManager.beginTransaction().apply {
-            val exerciseDescription = ExerciseDescriptionFragment()
+            val exerciseDescription = ExerciseDescriptionFragment(exercise)
             replace(R.id.flFragment, exerciseDescription)
             addToBackStack("attachExerciseDescription")
             commit()

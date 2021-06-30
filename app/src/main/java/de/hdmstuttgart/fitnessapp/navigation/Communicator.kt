@@ -1,5 +1,7 @@
 package de.hdmstuttgart.fitnessapp.navigation
 
+import de.hdmstuttgart.fitnessapp.database.entities.Exercise
+
 interface Communicator {
 
     fun switchToCountdown()
@@ -14,7 +16,7 @@ interface Communicator {
 
     fun switchToConfigureTraining()
 
-    fun switchToExerciseDescription()
+    fun switchToExerciseDescription(exercise: Exercise)
 
     fun switchToSettings()
 }

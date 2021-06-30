@@ -10,6 +10,7 @@ import android.os.CountDownTimer
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
@@ -17,23 +18,17 @@ import androidx.fragment.app.viewModels
 import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.activity.MainActivity
-import de.hdmstuttgart.fitnessapp.database.DataBase
-import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
-import de.hdmstuttgart.fitnessapp.database.repositories.ExerciseRepository
-import de.hdmstuttgart.fitnessapp.database.viewmodels.DisciplineViewModel
 import de.hdmstuttgart.fitnessapp.databinding.FragmentCountdownBinding
 import de.hdmstuttgart.fitnessapp.datastore.SettingsViewModel
 import kotlinx.coroutines.*
 
-class CountdownFragment : Fragment(R.layout.fragment_countdown) {
+class CountdownFragment(private val generator: TrainingsPlanGenerator) : Fragment(R.layout.fragment_countdown) {
     companion object {
         const val CHANNEL_ID = "channelID"
         const val NOTIFICATION_ID = 0
     }
 
     private lateinit var binding: FragmentCountdownBinding
-
-    private lateinit var exerciseRepo: ExerciseRepository
 
     private val scope = CoroutineScope(SupervisorJob())
     private var isPaused = false
@@ -42,8 +37,9 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
     lateinit var notification: Notification
     lateinit var notificationManager: NotificationManagerCompat
 
-    private val numberExercises = 7
+    private val numberExercises = generator.exercisesForTrainingsPlan.size
     private var currentExercise = 0
+    private var exerciseList = generator.exercisesForTrainingsPlan
 
     private var currentExerciseName = ""
 
@@ -52,16 +48,12 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         binding = FragmentCountdownBinding.bind(view)
 
         setHasOptionsMenu(true)
-        startCountdown(60000, 10)
+        println(exerciseList[currentExercise].duration)
+        startCountdown(exerciseList[currentExercise].duration.toLong() * 60000, 10)
+        binding.pbCountdown.max = exerciseList[currentExercise].duration * 6000
 
-        val database = DataBase.getInstance(requireContext(), scope)
-        exerciseRepo = ExerciseRepository(database.exerciseDao())
-
-        val generator = TrainingsPlanGenerator(requireContext(), scope)
-
-       scope.launch() {
-           generator.createTrainingsPlan("newPlan22", 120, 0.125F, 0.75F, 0.125F)
-       }
+        currentExerciseName = exerciseList[currentExercise].name
+        binding.tvExercise.text = currentExerciseName
 
         binding.btnStartStop.setOnClickListener {
             if (!isPaused) {
@@ -72,23 +64,24 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
             }
         }
 
-        binding.tvLast.setOnClickListener {
-            binding.tvExercise.text = "Klimmzuege"
-            scope.launch {
-                lastButton()
-            }
+        binding.tvExercise.setOnClickListener {
         }
 
-        binding.tvCurrent.setOnClickListener {
-            binding.tvExercise.text = "Exercise"
-            scope.launch {
-                currentButton()
+        binding.tvLast.setOnClickListener {
+            if (currentExercise > 0) {
+                currentExercise--
+                scope.launch {
+                    lastButton()
+                }
+            } else {
+                Toast.makeText(requireContext(), "Bereits bei der ersten Übung", Toast.LENGTH_LONG).show()
             }
+
         }
 
         binding.tvNext.setOnClickListener {
             val communicator = activity as Communicator
-            if (currentExercise < numberExercises) {
+            if (currentExercise < numberExercises - 1) {
                 currentExercise++
                 scope.launch {
                     nextButton()
@@ -153,18 +146,11 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(100)
         withContext(Dispatchers.Main) {
-//            binding.tvExercise.text = exerciseRepo.getAllExercises()[1].name
+            currentExerciseName = exerciseList[currentExercise].name
+            binding.tvExercise.text = currentExerciseName
             isPaused = false
-            startCountdown(60000, 10)
-        }
-    }
-
-    private suspend fun currentButton() {
-        isPaused = true
-        delay(100)
-        withContext(Dispatchers.Main) {
-            isPaused = false
-            startCountdown(60000, 10)
+            startCountdown(exerciseList[currentExercise].duration.toLong() * 60000, 10)
+            binding.pbCountdown.max = exerciseList[currentExercise].duration * 6000
         }
     }
 
@@ -172,8 +158,11 @@ class CountdownFragment : Fragment(R.layout.fragment_countdown) {
         isPaused = true
         delay(100)
         withContext(Dispatchers.Main) {
+            currentExerciseName = exerciseList[currentExercise].name
+            binding.tvExercise.text = currentExerciseName
             isPaused = false
-            startCountdown(60000, 10)
+            startCountdown(exerciseList[currentExercise].duration.toLong() * 60000, 10)
+            binding.pbCountdown.max = exerciseList[currentExercise].duration * 6000
         }
     }
 

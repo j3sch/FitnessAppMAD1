@@ -152,7 +152,7 @@ object TableData {
         ),
         Exercise(
             115,
-            "„Sprint-Parkour“",
+            "Sprint-Parkour",
             "Der Aufbau kann wie bereits beschrieben variieren. Das wichtigste ist immer wieder verschiedene Richtungswechsel sowie Bewegungsmusterwechsel in die Strecken einzubauen.Zum Beispiel wird mit einer kurzen geraden Strecke für den Sprint angefangen. Danach soll ein kurzer Seitgalopp nach links ausgeführt werden danach soll wieder gesprintet werden. So können immer weiter verschiedene Übungen aneinandergereiht werden. Der Sinn ist es dabei mit den Übungen und den Richtungswechseln den Schwung zu nehmen damit der Athlet in immer wieder neu aufnehmen muss bei jedem Sprint.",
             "- mehrere Hütchen /n - Hürden /n - Hindernisse",
             "Dieser kann variieren je nachdem wie der Trainer es insgesamt aufbauen möchte.",
@@ -272,7 +272,7 @@ object TableData {
         ),
         Exercise(
             127,
-            "Standwurf mit beiden Händen ",
+            "Standwurf mit beiden Händen",
             "Die Athleten stellen sich mit dem Speer an den Rand eines Feldes auf. Der Stand sollte hierbei Hüftbreit sein und der Speer wird in beide Hände genommen. Die Athleten sollen nun beim Wurf schwung holen mit dem Oberköper aus einer Haltung heraus die an ein \"C\" erinnern soll. Der Speer wird dabei mit beiden Händen über den Kopf genommen. Aus der Bewegung mit dem Oberkörper kann wird der Speer nun geworfen.",
             "- ein Speer für jeden Athleten",
             "Ein Speer für jeden und dann am Rand zum Rasen mit genug Abstand zu den Nebenleuten aufstellen. ",
