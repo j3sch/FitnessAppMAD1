@@ -18,12 +18,13 @@ interface ExerciseDao {
     @Delete
     suspend fun deleteExercise(exercise: Exercise)
 
+    @Query ("SELECT * FROM Exercises WHERE ExerciseId = :exerciseId")
+    suspend fun getExerciseById(exerciseId: Int): Exercise
+
     @Query("SELECT * FROM Exercises ORDER BY ExerciseId ASC")
     suspend fun getAllExercises(): List<Exercise>
 
     @Transaction
     @Query("SELECT * FROM Exercises WHERE DisciplineId = :disciplineId")
-    suspend fun getAllExercisesByDiscipline(disciplineId: Int): List<DisciplineWithExercises>
-
-
+    suspend fun getAllExercisesByDiscipline(disciplineId: Int): DisciplineWithExercises
 }

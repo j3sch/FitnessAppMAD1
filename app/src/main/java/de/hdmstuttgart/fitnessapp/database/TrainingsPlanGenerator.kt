@@ -32,7 +32,7 @@ class TrainingsPlanGenerator(
     private val disciplineRepo = DisciplineRepository(dataBase.disciplineDao())
     private val exerciseRepo = ExerciseRepository(dataBase.exerciseDao())
     private val trainingsPlanRepo = TrainingsPlanRepository(dataBase.trainingsPlanDao())
-    val exerciseTPRepo = ExerciseTPRepository(dataBase.exerciseTPDao())
+    private val exerciseTPRepo = ExerciseTPRepository(dataBase.exerciseTPDao())
 
     suspend fun createTrainingsPlan(
         name: String,
@@ -117,17 +117,24 @@ class TrainingsPlanGenerator(
 
     private suspend fun getExercisesForDiscipline(
         discipline: Discipline,
-        duration: Float
+        maxDuration: Float
     ): MutableList<Exercise> {
-        var i = 0F
+        val pauseExercise: Exercise = exerciseRepo.getExerciseById(100)
+        var currentDuration = 0F
         val newExercises: MutableList<Exercise> = mutableListOf()
-        val allExercises: List<Exercise> = exerciseRepo.getAllExercisesByDiscipline(discipline)
-        while (i <= duration && newExercises.size < allExercises.size) { // ADD CHECK TO MAKE SURE IT STOPS WHEN THERE ARE NO MORE EXERCISES AVAILABLE
+        val allExercises = exerciseRepo.getAllExercisesByDiscipline(discipline).toMutableList()
+        while (currentDuration <= maxDuration && allExercises.size > 0) {
             val newExercise: Exercise = getRandomFromList(allExercises)
-            if (!checkForDuplicateExercise(newExercise, newExercises)) {
-                i += newExercise.duration
-                println("Duration: $i")
-                newExercises.add(newExercise)
+            if (!checkForDuplicateExercise(newExercise, newExercises) && newExercise.name != pauseExercise.name) {
+                if(currentDuration + newExercise.duration > maxDuration){
+                    allExercises.remove(newExercise)
+                    continue
+                } else {
+                    currentDuration += newExercise.duration + pauseExercise.duration
+                    newExercises.add(newExercise)
+                    newExercises.add(pauseExercise)
+                    println("Duration: $currentDuration")
+                }
             }
         }
         return newExercises

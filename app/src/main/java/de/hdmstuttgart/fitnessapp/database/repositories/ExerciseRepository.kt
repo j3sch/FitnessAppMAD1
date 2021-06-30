@@ -14,7 +14,9 @@ class ExerciseRepository (private val exerciseDao: ExerciseDao) {
 
     suspend fun deleteExercise(exercise: Exercise) = exerciseDao.deleteExercise(exercise)
 
+    suspend fun getExerciseById(exerciseId: Int) = exerciseDao.getExerciseById(exerciseId)
+
     suspend fun getAllExercises(): List<Exercise> = exerciseDao.getAllExercises()
 
-    suspend fun getAllExercisesByDiscipline(discipline: Discipline): List<Exercise> = exerciseDao.getAllExercisesByDiscipline(discipline.disciplineId)
+    suspend fun getAllExercisesByDiscipline(discipline: Discipline): List<Exercise> = exerciseDao.getAllExercisesByDiscipline(discipline.disciplineId).exercises
 }

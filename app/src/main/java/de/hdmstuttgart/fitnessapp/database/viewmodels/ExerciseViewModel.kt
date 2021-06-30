@@ -29,6 +29,14 @@ class ExerciseViewModel(private val repository: ExerciseRepository) : ViewModel(
         repository.deleteExercise(exercise)
     }
 
+    fun getExerciseById(exerciseId: Int): LiveData<Exercise> {
+        val result = MutableLiveData<Exercise>()
+        viewModelScope.launch {
+            result.postValue(repository.getExerciseById(exerciseId))
+        }
+        return result
+    }
+
     fun getAllExercises(): LiveData<List<Exercise>> {
         val result = MutableLiveData<List<Exercise>>()
         viewModelScope.launch {
