@@ -97,7 +97,6 @@ class TrainingsPlanGenerator(
     private suspend fun getDisciplinesForTrainingsPlan(): List<Discipline> {
         val disciplines = mutableListOf<Discipline>()
         disciplines.add(disciplineRepo.getDisciplineByName(introDisciplineName))
-        disciplines.add(disciplineRepo.getDisciplineByName(introDisciplineName))
         val allDisciplines = disciplineRepo.getAllDisciplines().toMutableList()
         val firstDiscipline = getRandomDisciplineFromList(allDisciplines)
         allDisciplines.remove(firstDiscipline)
