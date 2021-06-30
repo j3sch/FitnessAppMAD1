@@ -63,8 +63,8 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
                             paramMain,
                             paramOutro
                     )
-                    communicator.switchToOverview()
                 }
+                communicator.switchToOverview()
             }
         }
     }
