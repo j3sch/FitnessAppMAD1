@@ -115,7 +115,7 @@ class CountdownFragment(generator: TrainingsPlanGenerator) : Fragment(R.layout.f
     private fun startCountdown(millisInFuture: Long, countDownInterval: Long) {
         object : CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                val textTimeRemaining = millisUntilFinished / 1000
+                val textTimeRemaining = millisUntilFinished / 60000
                 val circleTimeRemaining = millisUntilFinished / 10
                 if (isPaused) {
                     binding.tvCountdown.text = textTimeRemaining.toString()

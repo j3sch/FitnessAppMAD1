@@ -34,24 +34,21 @@ class ConfigureTrainingTest {
             .perform(click())
 
         onView(withId(R.id.tvTrainingTime))
-            .check(matches(withText("3,00")))
+            .check(matches(withText("2,00")))
 
         onView(withId(R.id.btnMinus))
             .perform(click())
 
         onView(withId(R.id.tvTrainingTime))
-            .check(matches(withText("2,45")))
-
+            .check(matches(withText("1,45")))
 
         onView(withId(R.id.btnPlus))
             .perform(click())
 
         onView(withId(R.id.tvTrainingTime))
-            .check(matches(withText("3,00")))
+            .check(matches(withText("2,00")))
 
         onView(withId(R.id.rangeSlider))
             .check(matches(isDisplayed()))
-
-
     }
 }
