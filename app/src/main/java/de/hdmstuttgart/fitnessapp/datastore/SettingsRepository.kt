@@ -53,7 +53,7 @@ class DataStoreRepository(context: Context) {
             }
         }
         .map { preference ->
-            val value: Float = preference[PreferenceKeys.trainingLength] ?: 3.00F
+            val value: Float = preference[PreferenceKeys.trainingLength] ?: 2.00F
             value
     }
 
@@ -66,7 +66,7 @@ class DataStoreRepository(context: Context) {
             }
         }
         .map { preference ->
-            val value: Float = preference[PreferenceKeys.firstSliderValue] ?: 0F
+            val value: Float = preference[PreferenceKeys.firstSliderValue] ?: 20F
             value
     }
 
@@ -79,7 +79,7 @@ class DataStoreRepository(context: Context) {
             }
         }
         .map { preference ->
-            val value: Float = preference[PreferenceKeys.secondSliderValue] ?: 0F
+            val value: Float = preference[PreferenceKeys.secondSliderValue] ?: 85F
             value
     }
 
