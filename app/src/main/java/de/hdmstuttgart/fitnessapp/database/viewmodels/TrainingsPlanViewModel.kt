@@ -43,10 +43,11 @@ class TrainingsPlanViewModel(private val repository: TrainingsPlanRepository) : 
         return result
     }
 
-    fun getExercisesForTrainingsPlan(trainingsPlan: TrainingsPlan): LiveData<List<TrainingsPlanWithExercises>> {
-        val result = MutableLiveData<List<TrainingsPlanWithExercises>>()
+    fun getExercisesForTrainingsPlanId(trainingsPlanId: Int): LiveData<List<Exercise>> {
+        val result = MutableLiveData<List<Exercise>>()
         viewModelScope.launch {
-            result.postValue(repository.getExercisesForTrainingsPlan(trainingsPlan).asLiveData().value)
+            result.postValue(repository.getExercisesForTrainingsPlanId(trainingsPlanId))
+            //result.postValue(repository.getExercisesForTrainingsPlanId(trainingsPlanId).asLiveData().value)
         }
         return result
     }

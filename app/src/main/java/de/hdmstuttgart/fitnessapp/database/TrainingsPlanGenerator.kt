@@ -45,6 +45,7 @@ class TrainingsPlanGenerator(
 
         val trainingsPlan = TrainingsPlan(name, date)
         val newTrainingsPlanId = trainingsPlanRepo.insertTrainingsPlan(trainingsPlan)
+        val newTrainingsPlan = trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt())
 
         val durationIntro = maximumTime * paramIntro
         val durationMain = (maximumTime * paramMain) / 2
@@ -75,18 +76,18 @@ class TrainingsPlanGenerator(
                 }
             }
         }
-        //fillExerciseTrainingsPlanCrossRef(trainingsPlanRepo.getTrainingsPlanById(newTrainingsPlanId.toInt()), exercisesForTrainingsPlan)
+        exerciseTPRepo.insertListOfCrossRef(getExerciseTrainingsPlanCrossRefs(newTrainingsPlan, exercisesForTrainingsPlan))
     }
 
-    private fun fillExerciseTrainingsPlanCrossRef(
+    private fun getExerciseTrainingsPlanCrossRefs(
         trainingsPlan: TrainingsPlan,
         trainingsPlanExercises: List<Exercise>
     ): List<ExerciseTrainingsPlanCrossRef> {
         val crossRefs = mutableListOf<ExerciseTrainingsPlanCrossRef>()
-        for (tp in trainingsPlanExercises) {
+        for (exercise in trainingsPlanExercises) {
             crossRefs.add(
                 ExerciseTrainingsPlanCrossRef(
-                    tp.exerciseId,
+                    exercise.exerciseId,
                     trainingsPlan.trainingsPlanId
                 )
             )

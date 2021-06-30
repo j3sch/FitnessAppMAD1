@@ -24,5 +24,5 @@ interface TrainingsPlanDao {
 
     @Transaction
     @Query("SELECT * FROM TrainingsPlans WHERE TrainingsPlanId = :trainingsPlanId")
-    fun getExercisesForTrainingsPlan(trainingsPlanId: Int) : Flow<List<TrainingsPlanWithExercises>>
+    suspend fun getExercisesForTrainingsPlanId(trainingsPlanId: Int) : TrainingsPlanWithExercises
 }

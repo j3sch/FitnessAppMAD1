@@ -38,7 +38,7 @@ abstract class DataBase : RoomDatabase() {
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
-            instance?.let { database ->
+            INSTANCE?.let { database ->
                 scope.launch {
                     val exerciseDao = database.exerciseDao()
                     val disciplineDao = database.disciplineDao()
@@ -50,7 +50,7 @@ abstract class DataBase : RoomDatabase() {
         }
     }
 
-    companion object {
+    /*companion object {
         @Volatile
         private var instance: DataBase? = null
 
@@ -65,7 +65,33 @@ abstract class DataBase : RoomDatabase() {
                 .addCallback(DatabaseCallback(scope))
                 .build()
         }
+    }*/
+
+    companion object {
+        @Volatile
+        private var INSTANCE: DataBase? = null
+
+        fun getInstance(
+            context: Context,
+            scope: CoroutineScope
+        ): DataBase {
+            // if the INSTANCE is not null, then return it,
+            // if it is, then create the database
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    DataBase::class.java,
+                    DB_NAME
+                )
+                    .addCallback(DatabaseCallback(scope))
+                    .build()
+                INSTANCE = instance
+                // return instance
+                instance
+            }
+        }
     }
+
 }
 
 

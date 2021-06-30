@@ -470,6 +470,16 @@ object TableData {
             15,
             10
         ),
+        Exercise(
+            147,
+            "Pause",
+            "-",
+            "-",
+            "-",
+            "-",
+            5,
+            0
+        ),
     )
 
     private var listOfDisciplines = listOf(

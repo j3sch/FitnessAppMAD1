@@ -19,6 +19,8 @@ class TrainingsPlanRepository (private val trainingsPlanDao: TrainingsPlanDao) {
 
     fun getAllTrainingsPlans(): Flow<List<TrainingsPlan>> = trainingsPlanDao.getAllTrainingsPlans()
 
-    fun getExercisesForTrainingsPlan(trainingsPlan: TrainingsPlan): Flow<List<TrainingsPlanWithExercises>> = trainingsPlanDao.getExercisesForTrainingsPlan(trainingsPlan.trainingsPlanId)
+    suspend fun getExercisesForTrainingsPlanId(trainingsPlanId: Int): List<Exercise> {
+        return trainingsPlanDao.getExercisesForTrainingsPlanId(trainingsPlanId).exercises
+    }
 
 }
