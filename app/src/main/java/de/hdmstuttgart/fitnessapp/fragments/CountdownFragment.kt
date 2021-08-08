@@ -127,16 +127,28 @@ class CountdownFragment(
     private fun startCountdown(millisInFuture: Long, countDownInterval: Long) {
         object : CountDownTimer(millisInFuture, countDownInterval) {
             override fun onTick(millisUntilFinished: Long) {
-                val textTimeRemaining = millisUntilFinished / 60000
+                val minTimeRemaining = millisUntilFinished / 60000
+                val secTimeRemaining = ((millisUntilFinished % 60000) / 1000)
+
                 val circleTimeRemaining = millisUntilFinished / 10
                 if (isPaused) {
-                    binding.tvCountdown.text = textTimeRemaining.toString()
+                    binding.tvCountdownMin.text = minTimeRemaining.toString()
+                    if (secTimeRemaining < 10) {
+                        binding.tvCountdownSec.text  = resources.getString(R.string.countdown_time_under_ten_sec, secTimeRemaining)
+                    } else {
+                        binding.tvCountdownSec.text = secTimeRemaining.toString()
+                    }
                     binding.pbCountdown.progress = circleTimeRemaining.toInt()
                     resumeFromMillis = millisUntilFinished
                     cancel()
                 } else {
                     try {
-                        binding.tvCountdown.text = textTimeRemaining.toString()
+                        binding.tvCountdownMin.text = minTimeRemaining.toString()
+                        if (secTimeRemaining < 10) {
+                            binding.tvCountdownSec.text  = resources.getString(R.string.countdown_time_under_ten_sec, secTimeRemaining)
+                        } else {
+                            binding.tvCountdownSec.text = secTimeRemaining.toString()
+                        }
                         binding.pbCountdown.progress = circleTimeRemaining.toInt()
                     } catch (e: Exception) {
                         cancel()
@@ -152,7 +164,7 @@ class CountdownFragment(
                         notificationManager.notify(NOTIFICATION_ID, notification)
                     }
                 })
-                binding.tvCountdown.text = getString(R.string.done)
+                binding.tvCountdownMin.text = getString(R.string.done)
             }
         }.start()
     }
