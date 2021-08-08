@@ -26,7 +26,7 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
         val dataBase = DataBase.getInstance(requireContext(), scope)
 
         val settingsViewModel by viewModels<SettingsViewModel>()
-        TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
+        val trainingsPlanViewModel = TrainingsPlanViewModel(TrainingsPlanRepository(dataBase.trainingsPlanDao()))
 
         var length = 0
         var paramIntro = 0F
@@ -50,7 +50,7 @@ class HomeFragment(private val generator: TrainingsPlanGenerator) :  Fragment(R.
             val communicator = activity as Communicator
             scope.launch(Dispatchers.IO) {
                 generator.exercisesForTrainingsPlan.clear()
-                val trainingPlan: TrainingsPlan
+                var trainingPlan = TrainingsPlan(0, "", "")
                 try {
                      trainingPlan = generator.createTrainingsPlan(
                         "neuer Trainingsplan",
