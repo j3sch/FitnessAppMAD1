@@ -10,7 +10,6 @@ import de.hdmstuttgart.fitnessapp.navigation.Communicator
 import de.hdmstuttgart.fitnessapp.R
 import de.hdmstuttgart.fitnessapp.adapter.OverviewAdapter
 import de.hdmstuttgart.fitnessapp.database.DataBase
-import de.hdmstuttgart.fitnessapp.database.TrainingsPlanGenerator
 import de.hdmstuttgart.fitnessapp.database.entities.Exercise
 import de.hdmstuttgart.fitnessapp.database.entities.TrainingsPlan
 import de.hdmstuttgart.fitnessapp.database.repositories.DisciplineRepository
@@ -49,6 +48,7 @@ class OverviewFragment(
             val adapter = OverviewAdapter(exerciseList, this, disciplines)
             binding.rvOverview.adapter = adapter
         })
+
         binding.rvOverview.layoutManager = LinearLayoutManager(requireContext())
 
         binding.btnStartTraining.setOnClickListener {
